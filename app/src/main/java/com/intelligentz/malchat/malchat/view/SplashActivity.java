@@ -18,12 +18,13 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
         requestPermission();
     }
 
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.READ_SMS}, REQUEST_CODE_ASK_PERMISSIONS);
+            requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS}, REQUEST_CODE_ASK_PERMISSIONS);
         }else {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -34,13 +35,16 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == REQUEST_CODE_ASK_PERMISSIONS && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            setContentView(R.layout.activity_splash);
+        if (requestCode == REQUEST_CODE_ASK_PERMISSIONS) {
+            for (int permisson : grantResults) {
+                if (permisson != PackageManager.PERMISSION_GRANTED) {
+                    showMessageOKCancel("You need to provide permisson to access SMS to continue.", null);
+                    return;
+                }
+            }
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();
-        } else {
-            showMessageOKCancel("You need to provide permisson to access SMS to continue.", null);
         }
     }
 

@@ -1,5 +1,6 @@
 package com.intelligentz.malchat.malchat.view;
 
+import android.content.BroadcastReceiver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.LoaderManager;
@@ -9,6 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.telephony.SmsManager;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.adaptor.AccountsRecyclerAdaptor;
@@ -22,12 +28,26 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
     private RecyclerView recyclerView;
     private ChatRecyclerAdaptor recyclerAdaptor;
     private RecyclerView.LayoutManager chatlayoutManager;
+    private ImageView imageView;
+    private EditText msgTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
         username = getIntent().getStringExtra("username");
+        getSupportActionBar().setTitle(username);
+        imageView = (ImageView) findViewById(R.id.send_btn);
+        msgTxt = (EditText) findViewById(R.id.msgTxt);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!msgTxt.getText().toString().isEmpty()) {
+                    sendSMS(msgTxt.getText().toString());
+                    msgTxt.setText("");
+                }
+            }
+        });
         getSupportLoaderManager().initLoader(1, null, this);
     }
 
@@ -95,4 +115,20 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         recyclerView.setAdapter(recyclerAdaptor);
         recyclerView.setNestedScrollingEnabled(false);
     }
+
+    public void sendSMS(String msg) {
+        msg = "Mal chat " + username + " " + msg;
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            smsManager.sendTextMessage("77255", null, msg, null, null);
+            Toast.makeText(getApplicationContext(), "Message Sent",
+                    Toast.LENGTH_LONG).show();
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
+                    Toast.LENGTH_LONG).show();
+            ex.printStackTrace();
+        }
+    }
+
+
 }

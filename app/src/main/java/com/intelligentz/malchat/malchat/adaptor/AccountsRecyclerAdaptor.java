@@ -84,6 +84,7 @@ public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecycl
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(context, ChatActivity.class);
+            intent.putExtra("username",messageList.get(getAdapterPosition()).getAddress());
             context.startActivity(intent);
         }
     }

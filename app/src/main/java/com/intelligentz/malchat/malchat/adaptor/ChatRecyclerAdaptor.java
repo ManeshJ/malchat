@@ -12,7 +12,9 @@ import com.intelligentz.malchat.malchat.model.ChatMessage;
 import com.intelligentz.malchat.malchat.view.ChatActivity;
 import com.intelligentz.malchat.malchat.view.MainActivity;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Created by Lakshan on 2017-01-07.
@@ -21,8 +23,8 @@ import java.util.ArrayList;
 public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
     ArrayList<ChatMessage> messageList = null;
     Context context = null;
-    MainActivity activity;
-    public ChatRecyclerAdaptor(ArrayList<ChatMessage> messageList, Context context, MainActivity activity) {
+    ChatActivity activity;
+    public ChatRecyclerAdaptor(ArrayList<ChatMessage> messageList, Context context, ChatActivity activity) {
         this.context = context;
         this.messageList = messageList;
         this.activity = activity;
@@ -56,12 +58,23 @@ public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewH
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ChatMessage message = messageList.get(position);
+        long val = Long.valueOf(message.getDate());
+        Date toDate = new Date(System.currentTimeMillis());
+        Date date=new Date(val);
+        SimpleDateFormat df2 = new SimpleDateFormat("MMM  dd");
+        if (df2.format(date).equals(df2.format(toDate))) {
+            df2 = new SimpleDateFormat("HH:mma");
+        }else {
+            df2 = new SimpleDateFormat("MMM  dd -HH:mma");
+        }
         switch (message.getType()) {
             case 0:
                 ((SentRecyclerViewHolder)holder).messageTxt.setText(message.getBody());
+                ((SentRecyclerViewHolder)holder).dateTxt.setText(df2.format(date));
                 break;
             case 1:
                 ((ReceivedRecyclerViewHolder)holder).messageTxt.setText(message.getBody());
+                ((ReceivedRecyclerViewHolder)holder).dateTxt.setText(df2.format(date));
         }
     }
     @Override
@@ -76,6 +89,7 @@ public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public class ReceivedRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView messageTxt;
+        TextView dateTxt;
         ArrayList<ChatMessage> messageList = null;
         Context context = null;
         public ReceivedRecyclerViewHolder(View itemView, Context context, ArrayList<ChatMessage> messageList) {
@@ -83,7 +97,7 @@ public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewH
             this.context =context;
             this.messageList = messageList;
             messageTxt = (TextView) itemView.findViewById(R.id.chatText);
-            itemView.setOnClickListener(this);
+            dateTxt = (TextView) itemView.findViewById(R.id.date_txt);
         }
 
         @Override
@@ -95,6 +109,7 @@ public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewH
 
     public class SentRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView messageTxt;
+        TextView dateTxt;
         ArrayList<ChatMessage> messageList = null;
         Context context = null;
         public SentRecyclerViewHolder(View itemView, Context context, ArrayList<ChatMessage> messageList) {
@@ -102,6 +117,7 @@ public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewH
             this.context =context;
             this.messageList = messageList;
             messageTxt = (TextView) itemView.findViewById(R.id.chatText);
+            dateTxt = (TextView) itemView.findViewById(R.id.date_txt);
         }
 
         @Override

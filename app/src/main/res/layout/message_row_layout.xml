@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="80dp"
+    android:gravity="center_vertical"
+    android:background="@color/colorIcon"
+    >
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:id="@+id/contact_icon"
+        android:layout_gravity="left"
+        android:src="@drawable/contact_icon"
+        app:siBorderWidth="2dp"
+        app:siBorderColor="@color/colorAccent"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/contact_name"
+        android:text="Contact Name"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_toRightOf="@id/contact_icon"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="23dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/last_seen"
+        android:text="Jan 6"
+        android:textColor="@color/colorDivider"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_below="@id/contact_name"
+        android:textSize="14dp"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/last_msg"
+        android:text="Last message"
+        android:textColor="@color/colorDivider"
+        android:layout_toRightOf="@id/contact_icon"
+        android:layout_toLeftOf="@id/last_seen"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:layout_below="@id/contact_name"
+        android:textSize="14dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorAccent"
+        android:layout_toEndOf="@id/contact_icon"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@id/contact_icon"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp" />
+
+
+    <!--<ImageButton-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:id="@+id/addfriendbtn"-->
+    <!--android:layout_alignParentBottom="true"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:src="@drawable/addfriendbtn"-->
+    <!--android:background="@android:color/transparent"-->
+    <!--android:scaleType="fitCenter"-->
+    <!--android:adjustViewBounds="true"/>-->
+
+</RelativeLayout>

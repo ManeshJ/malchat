@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#e74c3c</color>
+    <color name="colorPrimaryDark">#c0392b</color>
+    <color name="colorAccent">#BDBDBD</color>
+    <color name="textColorPrimary">#BDBDBD</color>
+    <color name="textColorSecondary">#9FA8DA</color>
+    <color name="colorPrimaryLight">#C8E6C9</color>
+    <color name="colorDivider">#e57373</color>
+    <color name="colorIcon">#FFFFFF</color>
+    <color name="met_textColor">#388E3C</color>
+    <color name="met_baseColor">#388E3C</color>
+    <color name="met_primaryColor">#FF9800</color>
+    <color name="met_errorColor">#F44336</color>
+    <color name="rounded_corner">#FFF9C4</color>
+    <color name="rounded_corner1">#ffcdd2</color>
+</resources>

@@ -33,4 +33,8 @@ dependencies {
     compile 'com.github.wangjiegulu:AndroidBucket:1.0.4'
     compile 'com.github.wangjiegulu:AndroidInject:1.0.6'
     compile 'com.github.wangjiegulu:ShadowViewHelper:1.0.1'
+    compile 'com.daimajia.easing:library:1.0.1@aar'
+    compile 'com.daimajia.androidanimations:library:1.1.3@aar'
+    compile 'cn.pedant.sweetalert:library:1.3'
+
 }

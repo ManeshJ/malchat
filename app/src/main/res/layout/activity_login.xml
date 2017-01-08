@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:theme="@style/AppTheme.NoActionBar"
+    tools:context="com.intelligentz.malchat.malchat.view.LoginActivity">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:src="@drawable/flowericon"
+        android:layout_margin="10dp"
+        android:id="@+id/flower"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hi,\nlooks like\nyou are\nnew here."
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="45dp"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:id="@+id/looks"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/already_registered"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:textStyle="italic"
+        android:textSize="15dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/already"
+        android:textColor="@color/colorPrimaryDark"
+        android:shadowColor="@color/rfab__color_text_label_item"
+        android:shadowDx="0"
+        android:shadowDy="6"
+        android:shadowRadius="7"
+        />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/register_btn"
+        android:paddingTop="0dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:id="@+id/register"
+        android:layout_above="@id/already"/>
+
+
+
+
+</RelativeLayout>

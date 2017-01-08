@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private RapidFloatingActionButton fab;
     private RapidFloatingActionHelper fabHelper;
     private RapidFloatingActionLayout fabLayout;
+    private String username;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         toolbarLayout.setTitle("මල් Chat");
         configureFab();
         getSupportLoaderManager().initLoader(1, null, this);
+        username = getIntent().getStringExtra("username");
     }
 
     private void configureRecyclerView(ArrayList<ChatMessage> messageList) {

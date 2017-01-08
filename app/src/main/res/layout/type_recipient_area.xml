@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:gravity="top"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recipLayout"
+        android:orientation="horizontal"
+        android:padding="2dp"
+        >
+
+        <EditText
+            android:layout_width="0dp"
+            android:id="@+id/recipTxt"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:textColorHint="@color/colorDivider"
+            android:background="@color/colorIcon"
+            android:textColor="@android:color/black"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:hint="Friend's MalChat username" />
+    </LinearLayout>
+</LinearLayout>

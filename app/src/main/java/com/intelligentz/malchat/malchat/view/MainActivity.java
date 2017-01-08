@@ -2,8 +2,10 @@ package com.intelligentz.malchat.malchat.view;
 
 import android.Manifest;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,18 +25,31 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
+
 import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.adaptor.AccountsRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.model.ChatMessage;
 import com.intelligentz.malchat.malchat.model.Contact;
-import java.util.ArrayList;
+import com.wangjie.androidbucket.utils.ABTextUtil;
+import com.wangjie.androidbucket.utils.imageprocess.ABShape;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
+import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
+import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks{
+import java.util.ArrayList;
+import java.util.List;
+
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks, RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     private RecyclerView recyclerView;
     private AccountsRecyclerAdaptor recyclerAdaptor;
     private RecyclerView.LayoutManager accountslayoutManager;
     private CollapsingToolbarLayout toolbarLayout;
-    private FloatingActionButton fab;
+    private RapidFloatingActionButton fab;
+    private RapidFloatingActionHelper fabHelper;
+    private RapidFloatingActionLayout fabLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,14 +59,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         toolbar.setTitle("මල් Chat");
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         toolbarLayout.setTitle("මල් Chat");
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        configureFab();
         getSupportLoaderManager().initLoader(1, null, this);
     }
 
@@ -136,5 +144,74 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @Override
     public void onLoaderReset(Loader loader) {
 
+    }
+
+    private void configureFab() {
+        fab = (RapidFloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
+//            }
+//        });
+        fabLayout = (RapidFloatingActionLayout) findViewById(R.id.activity_main_rfal);
+        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(this);
+        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
+        List<RFACLabelItem> items = new ArrayList<>();
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel("Fun Message")
+                .setResId(R.drawable.funicon)
+                .setIconNormalColor(0xff056f00)
+                .setIconPressedColor(0xff0d5302)
+                .setLabelColor(0xff056f00)
+                .setWrapper(0)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel("Love Message")
+                .setResId(R.drawable.hearticon)
+                .setIconNormalColor(0xffFFCC00)
+                .setIconPressedColor(0xff3e2723)
+                .setLabelColor(0xffFF3300)
+                .setLabelSizeSp(14)
+                .setWrapper(1)
+        );
+        items.add(new RFACLabelItem<Integer>()
+                .setLabel("Text Message")
+                .setResId(R.drawable.textmsgicon)
+                .setIconNormalColor(0xff0099FF)
+                .setIconPressedColor(0xffbf360c)
+                .setLabelColor(0xff0099FF)
+                .setWrapper(2)
+        );
+        rfaContent
+                .setItems(items)
+                .setIconShadowRadius(ABTextUtil.dip2px(this, 5))
+                .setIconShadowColor(0xff888888)
+                .setIconShadowDy(ABTextUtil.dip2px(this, 5))
+        ;
+        fabHelper = new RapidFloatingActionHelper(
+                this,
+                fabLayout,
+                fab,
+                rfaContent
+        ).build();
+    }
+
+    @Override
+    public void onRFACItemLabelClick(int i, RFACLabelItem rfacLabelItem) {
+//        Toast.makeText(this, "clicked label: " + i, Toast.LENGTH_SHORT).show();
+//        fabHelper.toggleContent();
+    }
+
+    @Override
+    public void onRFACItemIconClick(int i, RFACLabelItem rfacLabelItem) {
+        //Toast.makeText(this, "clicked icon: " + i, Toast.LENGTH_SHORT).show();
+        switch (i) {
+            case 2:
+                Intent intent = new Intent(this, NewChatActivity.class);
+                startActivity(intent);
+        }
+        fabHelper.toggleContent();
     }
 }

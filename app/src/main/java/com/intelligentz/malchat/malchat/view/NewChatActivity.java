@@ -1,6 +1,5 @@
 package com.intelligentz.malchat.malchat.view;
 
-import android.content.BroadcastReceiver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.v4.app.LoaderManager;
@@ -14,41 +13,42 @@ import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.intelligentz.malchat.malchat.R;
-import com.intelligentz.malchat.malchat.adaptor.AccountsRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.adaptor.ChatRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.model.ChatMessage;
 
 import java.util.ArrayList;
 
-public class ChatActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks{
+public class NewChatActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks{
     private String username;
     private RecyclerView recyclerView;
     private ChatRecyclerAdaptor recyclerAdaptor;
     private RecyclerView.LayoutManager chatlayoutManager;
     private ImageView imageView;
     private EditText msgTxt;
-
+    private EditText recipTxt;
+    private LinearLayout reciLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        setContentView(R.layout.activity_new_chat);
         username = getIntent().getStringExtra("username");
         getSupportActionBar().setTitle(username);
         imageView = (ImageView) findViewById(R.id.send_btn);
         msgTxt = (EditText) findViewById(R.id.msgTxt);
+        recipTxt = (EditText) findViewById(R.id.recipTxt);
+        reciLayout = (LinearLayout) findViewById(R.id.recipLayout);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!msgTxt.getText().toString().isEmpty()) {
+                if (!recipTxt.getText().toString().isEmpty() && !msgTxt.getText().toString().isEmpty()) {
                     sendSMS(msgTxt.getText().toString());
-                    msgTxt.setText("");
                 }
             }
         });
-        getSupportLoaderManager().initLoader(1, null, this);
     }
 
     @Override
@@ -73,45 +73,29 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                 String date = cursor.getString(cursor.getColumnIndex(columns[1]));
                 String[] substrings = new String[0];
                 String address = "";
+                int startIndex = 0;
                 chatMessage = new ChatMessage();
                 if (body.startsWith("F")) {
                     body = body.substring(0, body.length()-20);
                     substrings = body.split("\\s");
                     address  = substrings[1].substring(1);
                     chatMessage.setType(1);
-                    StringBuilder builder = new StringBuilder();
-                    for(int i = 0; i < 2; i++) {
-                        builder.append(substrings[i] + " ");
-                    }
-                    String prefix = builder.toString();
-                    prefix = prefix.substring(0, prefix.length()-1);
-                    body = body.replace(prefix+"\n\n","");
-                    if (!body.equals("fun") && !body.equals("love")) {
-                        chatMessage.setAddress(address);
-                        chatMessage.setDate(date);
-                        chatMessage.setBody(body);
-                        messageList.add(chatMessage);
-                    }
+                    startIndex = 2;
                 } else if (body.startsWith("M")) {
                     substrings = body.split(" ");
                     address  = substrings[2];
                     chatMessage.setType(0);
-                    StringBuilder builder = new StringBuilder();
-                    for(int i = 3; i < substrings.length; i++) {
-                        builder.append(substrings[i] + " ");
-                    }
-                    body = builder.toString();
-                    if (body.trim().equals("fun")) {
-                        body = new String(Character.toChars(0x1F602));
-                    } else if (body.trim().equals("love")) {
-                        body = new String(Character.toChars(0x2764));
-                    }
-                    chatMessage.setAddress(address);
-                    chatMessage.setDate(date);
-                    chatMessage.setBody(body);
-                    messageList.add(chatMessage);
+                    startIndex = 3;
                 }
-
+                chatMessage.setAddress(address);
+                chatMessage.setDate(date);
+                StringBuilder builder = new StringBuilder();
+                for(int i = startIndex; i < substrings.length; i++) {
+                    builder.append(substrings[i] + " ");
+                }
+                body = builder.toString();
+                chatMessage.setBody(body);
+                messageList.add(chatMessage);
             } while (cursor.moveToNext());
         } else {
             // empty box, no SMS
@@ -134,18 +118,23 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     public void sendSMS(String msg) {
+        username = recipTxt.getText().toString().trim();
+        getSupportActionBar().setTitle(username);
         msg = "Mal chat " + username + " " + msg;
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage("77255", null, msg, null, null);
             Toast.makeText(getApplicationContext(), "Message Sent",
                     Toast.LENGTH_LONG).show();
+
+            msgTxt.setText("");
+            reciLayout.setVisibility(View.GONE);
+            getSupportLoaderManager().initLoader(1, null, this);
         } catch (Exception ex) {
             Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
                     Toast.LENGTH_LONG).show();
             ex.printStackTrace();
         }
     }
-
 
 }

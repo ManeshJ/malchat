@@ -1,5 +1,6 @@
 package com.intelligentz.malchat.malchat.adaptor;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -23,8 +24,8 @@ import java.util.Date;
 public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements View.OnClickListener{
     ArrayList<ChatMessage> messageList = null;
     Context context = null;
-    ChatActivity activity;
-    public ChatRecyclerAdaptor(ArrayList<ChatMessage> messageList, Context context, ChatActivity activity) {
+    Activity activity;
+    public ChatRecyclerAdaptor(ArrayList<ChatMessage> messageList, Context context, Activity activity) {
         this.context = context;
         this.messageList = messageList;
         this.activity = activity;

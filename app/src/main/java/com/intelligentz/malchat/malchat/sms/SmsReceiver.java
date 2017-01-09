@@ -39,6 +39,6 @@ public class SmsReceiver extends BroadcastReceiver {
             }
         }
         // Uncomment this if you do not want the SMS put into the inbox (for priority > 999)
-        // this.abortBroadcast();
+         this.abortBroadcast();
     }
 }

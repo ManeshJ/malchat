@@ -24,9 +24,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.adaptor.AccountsRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.model.ChatMessage;
@@ -42,7 +45,7 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks, RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+public class MainActivity extends AbstractActivity implements LoaderManager.LoaderCallbacks, RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
     private RecyclerView recyclerView;
     private AccountsRecyclerAdaptor recyclerAdaptor;
     private RecyclerView.LayoutManager accountslayoutManager;
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private RapidFloatingActionHelper fabHelper;
     private RapidFloatingActionLayout fabLayout;
     private String username;
+    private String chatusername;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +67,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         configureFab();
         getSupportLoaderManager().initLoader(1, null, this);
         username = getIntent().getStringExtra("username");
+        chatusername = getIntent().getStringExtra("chatusername");
+        if (chatusername != null && !chatusername.equals("MalChat")) {
+            Intent intent = new Intent(this, ChatActivity.class);
+            intent.putExtra("username",chatusername);
+            startActivity(intent);
+        }
     }
 
     private void configureRecyclerView(ArrayList<ChatMessage> messageList) {
@@ -116,11 +126,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 String[] substrings = new String[0];
                 String address = "";
                 int startIndex = 0;
-                if (body.startsWith("F")) {
+                if (body.startsWith("From")) {
                     substrings = body.split("\\s");
                     address  = substrings[1].substring(1);
                     startIndex = 2;
-                } else if (body.startsWith("M")) {
+                } else if (body.startsWith("Mal")) {
                     substrings = body.split(" ");
                     address  = substrings[2];
                     startIndex = 3;
@@ -215,5 +225,35 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 startActivity(intent);
         }
         fabHelper.toggleContent();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_upusername) {
+            Intent intent = new Intent(this, UpdateUserNameActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        chatusername = intent.getStringExtra("chatusername");
+        if (chatusername != null && !chatusername.equals("MalChat")) {
+            Intent newintent = new Intent(this, ChatActivity.class);
+            intent.putExtra("username",chatusername);
+            startActivity(newintent);
+        }
     }
 }

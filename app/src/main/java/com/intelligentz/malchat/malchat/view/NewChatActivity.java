@@ -10,19 +10,21 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.adaptor.ChatRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.model.ChatMessage;
 
 import java.util.ArrayList;
 
-public class NewChatActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks{
+public class NewChatActivity extends AbstractActivity implements LoaderManager.LoaderCallbacks{
     private String username;
     private RecyclerView recyclerView;
     private ChatRecyclerAdaptor recyclerAdaptor;
@@ -49,6 +51,8 @@ public class NewChatActivity extends AppCompatActivity implements LoaderManager.
                 }
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
     }
 
     @Override
@@ -56,7 +60,7 @@ public class NewChatActivity extends AppCompatActivity implements LoaderManager.
         String[] projection = new String[]{"address", "date", "body"};
 //        String selection = "address=? AND body LIKE ?";
         String selection = "address=? AND (body LIKE ? OR body LIKE ?)";
-        String[] selectionArgs = new String[]{"77255", "From -"+username+"%", "Mal chat "+username+"%"};
+        String[] selectionArgs = new String[]{"77255", "From -"+username+"\n%", "Mal chat "+username+" %"};
         String orderBy = "date desc";
         return new CursorLoader(this, Uri.parse("content://sms"), projection, selection, selectionArgs, orderBy);
     }
@@ -73,29 +77,45 @@ public class NewChatActivity extends AppCompatActivity implements LoaderManager.
                 String date = cursor.getString(cursor.getColumnIndex(columns[1]));
                 String[] substrings = new String[0];
                 String address = "";
-                int startIndex = 0;
                 chatMessage = new ChatMessage();
-                if (body.startsWith("F")) {
+                if (body.startsWith("From")) {
                     body = body.substring(0, body.length()-20);
                     substrings = body.split("\\s");
                     address  = substrings[1].substring(1);
                     chatMessage.setType(1);
-                    startIndex = 2;
-                } else if (body.startsWith("M")) {
+                    StringBuilder builder = new StringBuilder();
+                    for(int i = 0; i < 2; i++) {
+                        builder.append(substrings[i] + " ");
+                    }
+                    String prefix = builder.toString();
+                    prefix = prefix.substring(0, prefix.length()-1);
+                    body = body.replace(prefix+"\n\n","");
+                    if (!body.equals("fun") && !body.equals("love")) {
+                        chatMessage.setAddress(address);
+                        chatMessage.setDate(date);
+                        chatMessage.setBody(body);
+                        messageList.add(chatMessage);
+                    }
+                } else if (body.startsWith("Mal")) {
                     substrings = body.split(" ");
                     address  = substrings[2];
                     chatMessage.setType(0);
-                    startIndex = 3;
+                    StringBuilder builder = new StringBuilder();
+                    for(int i = 3; i < substrings.length; i++) {
+                        builder.append(substrings[i] + " ");
+                    }
+                    body = builder.toString();
+                    if (body.trim().equals("fun")) {
+                        body = new String(Character.toChars(0x1F602));
+                    } else if (body.trim().equals("love")) {
+                        body = new String(Character.toChars(0x2764));
+                    }
+                    chatMessage.setAddress(address);
+                    chatMessage.setDate(date);
+                    chatMessage.setBody(body);
+                    messageList.add(chatMessage);
                 }
-                chatMessage.setAddress(address);
-                chatMessage.setDate(date);
-                StringBuilder builder = new StringBuilder();
-                for(int i = startIndex; i < substrings.length; i++) {
-                    builder.append(substrings[i] + " ");
-                }
-                body = builder.toString();
-                chatMessage.setBody(body);
-                messageList.add(chatMessage);
+
             } while (cursor.moveToNext());
         } else {
             // empty box, no SMS
@@ -136,5 +156,13 @@ public class NewChatActivity extends AppCompatActivity implements LoaderManager.
             ex.printStackTrace();
         }
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

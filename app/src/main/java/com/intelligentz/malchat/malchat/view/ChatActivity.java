@@ -11,11 +11,14 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.adaptor.AccountsRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.adaptor.ChatRecyclerAdaptor;
@@ -23,7 +26,7 @@ import com.intelligentz.malchat.malchat.model.ChatMessage;
 
 import java.util.ArrayList;
 
-public class ChatActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks{
+public class ChatActivity extends AbstractActivity implements LoaderManager.LoaderCallbacks{
     private String username;
     private RecyclerView recyclerView;
     private ChatRecyclerAdaptor recyclerAdaptor;
@@ -48,6 +51,8 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                 }
             }
         });
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportLoaderManager().initLoader(1, null, this);
     }
 
@@ -56,7 +61,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         String[] projection = new String[]{"address", "date", "body"};
 //        String selection = "address=? AND body LIKE ?";
         String selection = "address=? AND (body LIKE ? OR body LIKE ?)";
-        String[] selectionArgs = new String[]{"77255", "From -"+username+"%", "Mal chat "+username+"%"};
+        String[] selectionArgs = new String[]{"77255", "From -"+username+"\n%", "Mal chat "+username+" %"};
         String orderBy = "date desc";
         return new CursorLoader(this, Uri.parse("content://sms"), projection, selection, selectionArgs, orderBy);
     }
@@ -74,7 +79,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                 String[] substrings = new String[0];
                 String address = "";
                 chatMessage = new ChatMessage();
-                if (body.startsWith("F")) {
+                if (body.startsWith("From")) {
                     body = body.substring(0, body.length()-20);
                     substrings = body.split("\\s");
                     address  = substrings[1].substring(1);
@@ -92,7 +97,7 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
                         chatMessage.setBody(body);
                         messageList.add(chatMessage);
                     }
-                } else if (body.startsWith("M")) {
+                } else if (body.startsWith("Mal")) {
                     substrings = body.split(" ");
                     address  = substrings[2];
                     chatMessage.setType(0);
@@ -147,5 +152,14 @@ public class ChatActivity extends AppCompatActivity implements LoaderManager.Loa
         }
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 }

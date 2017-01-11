@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.intelligentz.malchat.malchat.view.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/action_upusername"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="Update username"
         app:showAsAction="never" />
 </menu>

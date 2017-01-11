@@ -8,51 +8,70 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.intelligentz.malchat.malchat.view.UserNameChoosingActivity">
+    tools:context="com.intelligentz.malchat.malchat.view.NewUserNameActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
 
-
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
-        android:src="@drawable/flowericon"
-        android:layout_margin="10dp"
-        android:id="@+id/flower"/>
-
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="2"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:src="@drawable/flowericon"
+                android:layout_margin="10dp"
+                android:id="@+id/flower"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:text="Tell us your\nusername"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="35sp"
+                android:textColor="@color/colorPrimaryDark"
+                />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0px"
             android:layout_weight="1"
             android:orientation="vertical"
             >
-            <Button
+            <EditText
+                android:elevation="5dp"
+                android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
+                android:hint="Type username"
+                android:textColorHint="@color/colorDivider"
                 android:shadowColor="@color/rfab__color_text_label_item"
                 android:shadowRadius="7"
                 android:shadowDy="5"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/colorIcon"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="18sp"
                 android:textAllCaps="false"
-                android:text="I don't have a MalChat username"
-                android:id="@+id/noUserNamebtn"
+                android:id="@+id/usernameTxt"
                 />
             <Button
-                android:layout_width="match_parent"
+                android:layout_gravity="center"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
-                android:layout_marginBottom="50dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
@@ -63,8 +82,8 @@
                 android:textColor="@color/colorIcon"
                 android:textSize="18sp"
                 android:textAllCaps="false"
-                android:text="I already have a MalChat username"
-                android:id="@+id/alreadyUserNameBtn"
+                android:text="Save"
+                android:id="@+id/saveBtn"
                 />
         </LinearLayout>
     </LinearLayout>

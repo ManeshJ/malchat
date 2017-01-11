@@ -16,9 +16,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
+import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
+import com.intelligentz.malchat.malchat.SMSReceivingService;
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends AbstractActivity {
     final int REQUEST_CODE_ASK_PERMISSIONS = 123;
     private ImageView spinner;
     long startTime;
@@ -78,6 +80,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void goToNextActivity() {
+        startService(new Intent(this, SMSReceivingService.class));
         SharedPreferences mPrefs = getSharedPreferences("malchat.username", Context.MODE_PRIVATE);
         String username = mPrefs.getString("username", null);
         if (username == null) {

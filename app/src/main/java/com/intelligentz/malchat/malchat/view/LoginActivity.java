@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.model.Contact;
 import com.intelligentz.malchat.malchat.sms.MessageReceiver;
@@ -26,7 +27,7 @@ import org.w3c.dom.Text;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AbstractActivity {
     private TextView hiTxt;
     private ImageView flower;
     private TextView already;
@@ -34,6 +35,8 @@ public class LoginActivity extends AppCompatActivity {
     private SmsReceiver receiver;
     private Context context;
     private SweetAlertDialog progressDialog;
+    private BroadcastReceiver broadcastReceiver;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         });
         animate();
     }
+
     private void unregisterReceiver()
     {
         if (receiver == null)
@@ -113,50 +117,50 @@ public class LoginActivity extends AppCompatActivity {
         progressDialog.show();
         final String SENT_ACTION = "com.intelligentz.malchat.regsent";
         PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent(SENT_ACTION), 0);
-        registerReceiver(
-                new BroadcastReceiver()
+        broadcastReceiver  = new BroadcastReceiver()
+        {
+            @Override
+            public void onReceive(Context arg0,Intent arg1)
+            {
+                switch(getResultCode())
                 {
-                    @Override
-                    public void onReceive(Context arg0,Intent arg1)
-                    {
-                        switch(getResultCode())
-                        {
-                            case Activity.RESULT_OK:
-                                progressDialog.setTitleText("Confirming...")
-                                        .setContentText("Waiting for confirmation.")
-                                        .changeAlertType(SweetAlertDialog.PROGRESS_TYPE);
-                                break;
-                            case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
-                                progressDialog.setTitleText("Failed!")
-                                        .setContentText("There was an error registering you to MalChat. Please try again.")
-                                        .setConfirmText("OK")
-                                        .setConfirmClickListener(successListener)
-                                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                                break;
-                            case SmsManager.RESULT_ERROR_NO_SERVICE:
-                                progressDialog.setTitleText("Failed!")
-                                        .setContentText("There was an error registering you to MalChat. Please try again.")
-                                        .setConfirmText("OK")
-                                        .setConfirmClickListener(successListener)
-                                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                                break;
-                            case SmsManager.RESULT_ERROR_NULL_PDU:
-                                progressDialog.setTitleText("Failed!")
-                                        .setContentText("There was an error registering you to MalChat. Please try again.")
-                                        .setConfirmText("OK")
-                                        .setConfirmClickListener(successListener)
-                                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                                break;
-                            case SmsManager.RESULT_ERROR_RADIO_OFF:
-                                progressDialog.setTitleText("Failed!")
-                                        .setContentText("There was an error registering you to MalChat. Please try again.")
-                                        .setConfirmText("OK")
-                                        .setConfirmClickListener(successListener)
-                                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
-                                break;
-                        }
-                    }
-                }, new IntentFilter(SENT_ACTION));
+                    case Activity.RESULT_OK:
+                        progressDialog.setTitleText("Confirming...")
+                                .setContentText("Waiting for confirmation.")
+                                .changeAlertType(SweetAlertDialog.PROGRESS_TYPE);
+                        break;
+                    case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
+                        progressDialog.setTitleText("Failed!")
+                                .setContentText("There was an error registering you to MalChat. Please try again.")
+                                .setConfirmText("OK")
+                                .setConfirmClickListener(successListener)
+                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                        break;
+                    case SmsManager.RESULT_ERROR_NO_SERVICE:
+                        progressDialog.setTitleText("Failed!")
+                                .setContentText("There was an error registering you to MalChat. Please try again.")
+                                .setConfirmText("OK")
+                                .setConfirmClickListener(successListener)
+                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                        break;
+                    case SmsManager.RESULT_ERROR_NULL_PDU:
+                        progressDialog.setTitleText("Failed!")
+                                .setContentText("There was an error registering you to MalChat. Please try again.")
+                                .setConfirmText("OK")
+                                .setConfirmClickListener(successListener)
+                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                        break;
+                    case SmsManager.RESULT_ERROR_RADIO_OFF:
+                        progressDialog.setTitleText("Failed!")
+                                .setContentText("There was an error registering you to MalChat. Please try again.")
+                                .setConfirmText("OK")
+                                .setConfirmClickListener(successListener)
+                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                        break;
+                }
+            }
+        };
+        registerReceiver(broadcastReceiver, new IntentFilter(SENT_ACTION));
         registerReceiver();
         String msg = "Reg Mal";
         try {

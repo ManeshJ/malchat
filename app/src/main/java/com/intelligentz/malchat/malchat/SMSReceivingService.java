@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
@@ -96,18 +98,19 @@ public class SMSReceivingService extends Service {
                         intent.putExtra("chatusername", address);
                         PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), (int) System.currentTimeMillis(), intent, 0);
                         Notification n;
+                        Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
                           n = new Notification.Builder(getApplicationContext())
-                                .setContentTitle("New message from "+address)
-                                .setContentText(body)
+                                .setContentTitle(address)
+                                .setContentText(body).setLargeIcon(largeIcon)
                                 .setSmallIcon(R.drawable.flowericon)
                                 .setContentIntent(pIntent)
                                 .setAutoCancel(true).
                                           setStyle(new Notification.BigTextStyle().bigText(body)).build();
                         } else {
                             n = new Notification.Builder(getApplicationContext())
-                                    .setContentTitle("New message from "+address)
-                                    .setContentText(body)
+                                    .setContentTitle(address)
+                                    .setContentText(body).setLargeIcon(largeIcon)
                                     .setSmallIcon(R.drawable.flowericon)
                                     .setContentIntent(pIntent)
                                     .setAutoCancel(true).

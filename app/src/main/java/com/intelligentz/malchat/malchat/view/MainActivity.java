@@ -63,7 +63,9 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
         setSupportActionBar(toolbar);
         toolbar.setTitle("මල් Chat");
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        toolbarLayout.setTitle("මල් Chat");
+        //toolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorPrimaryDark));
+        toolbarLayout.setTitle("");
+        toolbarLayout.setBackgroundResource(R.drawable.header_image);
         configureFab();
         getSupportLoaderManager().initLoader(1, null, this);
         username = getIntent().getStringExtra("username");
@@ -255,5 +257,11 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
             intent.putExtra("username",chatusername);
             startActivity(newintent);
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getSupportActionBar().setTitle("මල්Chat");
     }
 }

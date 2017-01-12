@@ -103,7 +103,7 @@ public class SMSReceivingService extends Service {
                           n = new Notification.Builder(getApplicationContext())
                                 .setContentTitle(address)
                                 .setContentText(body).setLargeIcon(largeIcon)
-                                .setSmallIcon(R.drawable.flowericon)
+                                .setSmallIcon(R.mipmap.ic_launcher)
                                 .setContentIntent(pIntent)
                                 .setAutoCancel(true).
                                           setStyle(new Notification.BigTextStyle().bigText(body)).build();
@@ -111,7 +111,7 @@ public class SMSReceivingService extends Service {
                             n = new Notification.Builder(getApplicationContext())
                                     .setContentTitle(address)
                                     .setContentText(body).setLargeIcon(largeIcon)
-                                    .setSmallIcon(R.drawable.flowericon)
+                                    .setSmallIcon(R.mipmap.ic_launcher)
                                     .setContentIntent(pIntent)
                                     .setAutoCancel(true).
                                             getNotification();

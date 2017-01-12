@@ -85,7 +85,7 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
         if (messageType != null){
             if (messageType.equals("love")) {
                 sendSMS("love");
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+               /* if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                     mContainer.clearEmojis();
                     mContainer.addEmoji(R.drawable.hearticon);
                     mContainer.setPer(10);
@@ -93,10 +93,10 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
                     mContainer.setDropDuration(2400);
                     mContainer.setDropFrequency(500);
                     mContainer.startDropping();
-                }
+                }*/
             }else if (messageType.equals("fun")){
                 sendSMS("fun");
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+               /* if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                     mContainer.clearEmojis();
                     mContainer.addEmoji(R.drawable.funicon);
                     mContainer.setPer(10);
@@ -104,7 +104,7 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
                     mContainer.setDropDuration(2400);
                     mContainer.setDropFrequency(500);
                     mContainer.startDropping();
-                }
+                }*/
             }
         }
     }
@@ -124,7 +124,7 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
             public void onClick(View view) {
                 sendSMS("love");
                 dialog.dismiss();
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+               /* if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                     mContainer.clearEmojis();
                     mContainer.addEmoji(R.drawable.hearticon);
                     mContainer.setPer(10);
@@ -132,7 +132,7 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
                     mContainer.setDropDuration(2400);
                     mContainer.setDropFrequency(500);
                     mContainer.startDropping();
-                }
+                }*/
             }
         });
 
@@ -141,7 +141,7 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
             public void onClick(View view) {
                 sendSMS("fun");
                 dialog.dismiss();
-                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                /*if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
                     mContainer.clearEmojis();
                     mContainer.addEmoji(R.drawable.funicon);
                     mContainer.setPer(10);
@@ -149,7 +149,7 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
                     mContainer.setDropDuration(2400);
                     mContainer.setDropFrequency(500);
                     mContainer.startDropping();
-                }
+                }*/
             }
         });
         dialog.show();
@@ -196,7 +196,7 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
                         messageList.add(chatMessage);
                     }
                 } else if (body.startsWith("Mal")) {
-                    substrings = body.split(" ");
+                    substrings = body.split("\\s");
                     address  = substrings[2];
                     chatMessage.setType(0);
                     StringBuilder builder = new StringBuilder();

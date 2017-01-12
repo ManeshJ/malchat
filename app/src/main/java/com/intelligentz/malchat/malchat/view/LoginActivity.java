@@ -45,6 +45,13 @@ public class LoginActivity extends AbstractActivity {
         hiTxt = (TextView) findViewById(R.id.looks);
         flower = (ImageView) findViewById(R.id.flower);
         already = (TextView) findViewById(R.id.already);
+        already.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, UserNameChoosingActivity.class);
+                startActivity(intent);
+            }
+        });
         register = (ImageView) findViewById(R.id.register);
         register.setOnClickListener(new View.OnClickListener() {
             @Override

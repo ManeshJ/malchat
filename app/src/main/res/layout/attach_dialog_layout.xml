@@ -4,28 +4,38 @@
     android:layout_height="wrap_content"
     android:layout_centerHorizontal="true">
     <RelativeLayout
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:layout_gravity="center_horizontal">
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="@color/colorAccent"
+            android:gravity="center_vertical">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginLeft="20dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:padding="15dp"
             android:src="@drawable/hearticon"
-            android:id="@+id/heartBtn"/>
+            android:id="@+id/heartBtn"
+            android:background="@drawable/attach_layout_button_shape"
+            android:layout_marginRight="0.15dp"
+            />
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="30dp"
-            android:layout_centerVertical="true"
-            android:layout_alignParentRight="true"
+            android:layout_marginLeft="0.15dp"
+            android:padding="15dp"
+            android:layout_weight="1"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
             android:src="@drawable/funicon"
+            android:background="@drawable/attach_layout_button_shape"
             android:id="@+id/funBtn"/>
+        </LinearLayout>
     </RelativeLayout>
+
 
 </LinearLayout>

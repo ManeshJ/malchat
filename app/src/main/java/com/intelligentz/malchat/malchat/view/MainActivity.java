@@ -151,7 +151,7 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
                     address  = substrings[1].substring(1);
                     startIndex = 2;
                 } else if (body.startsWith("Mal")) {
-                    substrings = body.split(" ");
+                    substrings = body.split("\\s");
                     address  = substrings[2];
                     startIndex = 3;
                 }

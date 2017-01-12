@@ -14,10 +14,10 @@
         >
 
         <EditText
-            android:layout_width="match_parent"
+            android:layout_width="0px"
             android:id="@+id/msgTxt"
             android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:layout_weight="6"
             android:textColorHint="@color/colorDivider"
             android:background="@color/colorIcon"
             android:textColor="@android:color/black"
@@ -25,9 +25,18 @@
             android:hint="Write a message" />
 
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="0px"
             android:layout_height="50dp"
-            android:layout_weight="5"
+            android:layout_weight="1"
+            android:padding="4dp"
+            android:id="@+id/attach_btn"
+            android:background="@color/colorIcon"
+            android:src="@drawable/attach_btn" />
+
+        <ImageView
+            android:layout_width="0px"
+            android:layout_height="50dp"
+            android:layout_weight="1"
             android:padding="4dp"
             android:id="@+id/send_btn"
             android:background="@color/colorIcon"

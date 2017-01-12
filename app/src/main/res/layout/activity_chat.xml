@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.luolc.emojirain.EmojiRainLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.intelligentz.malchat.malchat.view.ChatActivity"
+    android:id="@+id/group_emoji_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/chat_background"
-    tools:context="com.intelligentz.malchat.malchat.view.ChatActivity">
-    <include
-        android:id="@+id/writemsg"
-        layout="@layout/type_message_area"
+    app:per="10"
+    app:duration="7200"
+    app:dropDuration="2400"
+    app:dropFrequency="500">
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"
-        android:gravity="bottom" />
+        android:layout_height="match_parent"
+        android:background="@drawable/chat_background"
+        android:id="@+id/activityRoot"
+        android:focusableInTouchMode="true"
+        >
+        <include
+            android:id="@+id/writemsg"
+            layout="@layout/type_message_area"
+            android:layout_width="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_height="wrap_content"
+            android:gravity="bottom" />
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/recyclerview"
-        android:layout_alignParentTop="true"
-        android:layout_above="@id/writemsg">
-
-    </android.support.v7.widget.RecyclerView>
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/recyclerview"
+            android:layout_alignParentTop="true"
+            android:layout_above="@id/writemsg"/>
 
 
-</RelativeLayout>
+
+    </RelativeLayout>
+</com.luolc.emojirain.EmojiRainLayout>

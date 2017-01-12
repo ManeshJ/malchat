@@ -1,8 +1,10 @@
 package com.intelligentz.malchat.malchat.view;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -19,14 +21,21 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.media.session.MediaControllerCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.intelligentz.malchat.malchat.AbstractActivity;
@@ -34,6 +43,9 @@ import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.adaptor.AccountsRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.model.ChatMessage;
 import com.intelligentz.malchat.malchat.model.Contact;
+import com.luolc.emojirain.EmojiRainLayout;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 import com.wangjie.androidbucket.utils.ABTextUtil;
 import com.wangjie.androidbucket.utils.imageprocess.ABShape;
 import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
@@ -55,10 +67,16 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
     private RapidFloatingActionLayout fabLayout;
     private String username;
     private String chatusername;
+    private DialogPlus funDialog;
+    private View fun_message_view;
+    private ImageView sendBtn;
+    private EditText usernameTxt;
+    private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        context = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("මල් Chat");
@@ -222,6 +240,12 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
     public void onRFACItemIconClick(int i, RFACLabelItem rfacLabelItem) {
         //Toast.makeText(this, "clicked icon: " + i, Toast.LENGTH_SHORT).show();
         switch (i) {
+            case 0:
+                showfundialog();
+                break;
+            case 1:
+                showlovedialog();
+                break;
             case 2:
                 Intent intent = new Intent(this, NewChatActivity.class);
                 startActivity(intent);
@@ -229,6 +253,54 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
         fabHelper.toggleContent();
     }
 
+    private void showfundialog() {
+        funDialog = DialogPlus.newDialog(this)
+                .setContentHolder(new ViewHolder(R.layout.fun_dialog_layout))
+                .setContentBackgroundResource(R.drawable.fun_message_fragment_background)
+                .setExpanded(false)
+                .setGravity(Gravity.CENTER)
+                .create();
+
+        fun_message_view = funDialog.getHolderView();
+        sendBtn = (ImageView) fun_message_view.findViewById(R.id.sendBtn);
+        usernameTxt = (EditText) fun_message_view.findViewById(R.id.usernameTxt);
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("username", usernameTxt.getText().toString().trim());
+                intent.putExtra("messageType","fun");
+                startActivity(intent);
+                funDialog.dismiss();
+            }
+        });
+        funDialog.show();
+    }
+
+    private void showlovedialog() {
+        funDialog = DialogPlus.newDialog(this)
+                .setContentHolder(new ViewHolder(R.layout.fun_dialog_layout))
+                .setContentBackgroundResource(R.drawable.fun_message_fragment_background)
+                .setExpanded(false)
+                .setGravity(Gravity.CENTER)
+                .create();
+
+        fun_message_view = funDialog.getHolderView();
+        sendBtn = (ImageView) fun_message_view.findViewById(R.id.sendBtn);
+        ((TextView)fun_message_view.findViewById(R.id.headerTxt)).setText("New Love Message");
+        usernameTxt = (EditText) fun_message_view.findViewById(R.id.usernameTxt);
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ChatActivity.class);
+                intent.putExtra("username", usernameTxt.getText().toString().trim());
+                intent.putExtra("messageType","love");
+                startActivity(intent);
+                funDialog.dismiss();
+            }
+        });
+        funDialog.show();
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -264,4 +336,5 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
         super.onResume();
         getSupportActionBar().setTitle("මල්Chat");
     }
+
 }

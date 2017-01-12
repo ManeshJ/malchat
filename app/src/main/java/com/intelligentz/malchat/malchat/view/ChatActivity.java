@@ -1,8 +1,10 @@
 package com.intelligentz.malchat.malchat.view;
 
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -11,9 +13,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -23,6 +29,10 @@ import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.adaptor.AccountsRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.adaptor.ChatRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.model.ChatMessage;
+import com.luolc.emojirain.EmojiRainLayout;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnItemClickListener;
+import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.ArrayList;
 
@@ -32,16 +42,33 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
     private ChatRecyclerAdaptor recyclerAdaptor;
     private RecyclerView.LayoutManager chatlayoutManager;
     private ImageView imageView;
+    private ImageView attachBtn;
     private EditText msgTxt;
+    private Context context;
+    private ArrayList<ChatMessage> messageList;
+    private DialogPlus dialog;
+    private ImageView heartBtn;
+    private ImageView funBtn;
+    private View view;
+    private EmojiRainLayout mContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        context = this;
         username = getIntent().getStringExtra("username");
         getSupportActionBar().setTitle(username);
         imageView = (ImageView) findViewById(R.id.send_btn);
+        mContainer = (EmojiRainLayout) findViewById(R.id.group_emoji_container);
         msgTxt = (EditText) findViewById(R.id.msgTxt);
+        attachBtn = (ImageView) findViewById(R.id.attach_btn);
+        attachBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                attachItem();
+            }
+        });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,8 +81,79 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportLoaderManager().initLoader(1, null, this);
+        String messageType = getIntent().getStringExtra("messageType");
+        if (messageType != null){
+            if (messageType.equals("love")) {
+                sendSMS("love");
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    mContainer.clearEmojis();
+                    mContainer.addEmoji(R.drawable.hearticon);
+                    mContainer.setPer(10);
+                    mContainer.setDuration(5000);
+                    mContainer.setDropDuration(2400);
+                    mContainer.setDropFrequency(500);
+                    mContainer.startDropping();
+                }
+            }else if (messageType.equals("fun")){
+                sendSMS("fun");
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    mContainer.clearEmojis();
+                    mContainer.addEmoji(R.drawable.funicon);
+                    mContainer.setPer(10);
+                    mContainer.setDuration(5000);
+                    mContainer.setDropDuration(2400);
+                    mContainer.setDropFrequency(500);
+                    mContainer.startDropping();
+                }
+            }
+        }
     }
+    private void attachItem() {
+        dialog = DialogPlus.newDialog(this)
+                .setContentHolder(new ViewHolder(R.layout.attach_dialog_layout))
+                .setExpanded(false)
+                .setGravity(Gravity.BOTTOM)
+                .create();
 
+        view = dialog.getHolderView();
+        heartBtn = (ImageView) view.findViewById(R.id.heartBtn);
+        funBtn = (ImageView) view.findViewById(R.id.funBtn);
+
+        heartBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendSMS("love");
+                dialog.dismiss();
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    mContainer.clearEmojis();
+                    mContainer.addEmoji(R.drawable.hearticon);
+                    mContainer.setPer(10);
+                    mContainer.setDuration(5000);
+                    mContainer.setDropDuration(2400);
+                    mContainer.setDropFrequency(500);
+                    mContainer.startDropping();
+                }
+            }
+        });
+
+        funBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendSMS("fun");
+                dialog.dismiss();
+                if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
+                    mContainer.clearEmojis();
+                    mContainer.addEmoji(R.drawable.funicon);
+                    mContainer.setPer(10);
+                    mContainer.setDuration(5000);
+                    mContainer.setDropDuration(2400);
+                    mContainer.setDropFrequency(500);
+                    mContainer.startDropping();
+                }
+            }
+        });
+        dialog.show();
+    }
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
         String[] projection = new String[]{"address", "date", "body"};
@@ -69,7 +167,7 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
     @Override
     public void onLoadFinished(Loader loader, Object data) {
         Cursor cursor = (Cursor) data;
-        ArrayList<ChatMessage> messageList = new ArrayList<>();
+        messageList = new ArrayList<>();
         if (cursor.moveToFirst()) { // must check the result to prevent exception
             String[] columns = new String[]{"address", "date", "body"};
             ChatMessage chatMessage;
@@ -135,6 +233,7 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
         recyclerView.setLayoutManager(chatlayoutManager);
         recyclerAdaptor = new ChatRecyclerAdaptor(messageList, this, this);
         recyclerView.setAdapter(recyclerAdaptor);
+        chatlayoutManager.scrollToPosition(0);
         recyclerView.setNestedScrollingEnabled(false);
     }
 

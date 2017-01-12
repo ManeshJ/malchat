@@ -33,11 +33,13 @@ public class SaveExistingUserName extends AbstractActivity {
     }
 
     private void saveUserName() {
+        username = usernameTxt.getText().toString().trim();
         SharedPreferences mPrefs = getSharedPreferences("malchat.username", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = mPrefs.edit();
         editor.putString("username",username);
         editor.commit();
         Intent intent = new Intent(context, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("username",username);
         startActivity(intent);
         finish();

@@ -164,6 +164,7 @@ public class NewUserNameActivity extends AbstractActivity {
                         editor.commit();
                         Intent intent = new Intent(context, MainActivity.class);
                         intent.putExtra("username",username);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         unregisterReceiver();
                         if (progressDialog.isShowing()) {

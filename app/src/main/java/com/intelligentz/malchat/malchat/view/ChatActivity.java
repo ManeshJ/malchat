@@ -42,15 +42,9 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
     private ChatRecyclerAdaptor recyclerAdaptor;
     private RecyclerView.LayoutManager chatlayoutManager;
     private ImageView imageView;
-    private ImageView attachBtn;
     private EditText msgTxt;
     private Context context;
     private ArrayList<ChatMessage> messageList;
-    private DialogPlus dialog;
-    private ImageView heartBtn;
-    private ImageView funBtn;
-    private View view;
-    private EmojiRainLayout mContainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +54,7 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
         username = getIntent().getStringExtra("username");
         getSupportActionBar().setTitle(username);
         imageView = (ImageView) findViewById(R.id.send_btn);
-        mContainer = (EmojiRainLayout) findViewById(R.id.group_emoji_container);
         msgTxt = (EditText) findViewById(R.id.msgTxt);
-        attachBtn = (ImageView) findViewById(R.id.attach_btn);
-        attachBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                attachItem();
-            }
-        });
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,78 +67,6 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportLoaderManager().initLoader(1, null, this);
-        String messageType = getIntent().getStringExtra("messageType");
-        if (messageType != null){
-            if (messageType.equals("love")) {
-                sendSMS("love");
-               /* if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                    mContainer.clearEmojis();
-                    mContainer.addEmoji(R.drawable.hearticon);
-                    mContainer.setPer(10);
-                    mContainer.setDuration(5000);
-                    mContainer.setDropDuration(2400);
-                    mContainer.setDropFrequency(500);
-                    mContainer.startDropping();
-                }*/
-            }else if (messageType.equals("fun")){
-                sendSMS("fun");
-               /* if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                    mContainer.clearEmojis();
-                    mContainer.addEmoji(R.drawable.funicon);
-                    mContainer.setPer(10);
-                    mContainer.setDuration(5000);
-                    mContainer.setDropDuration(2400);
-                    mContainer.setDropFrequency(500);
-                    mContainer.startDropping();
-                }*/
-            }
-        }
-    }
-    private void attachItem() {
-        dialog = DialogPlus.newDialog(this)
-                .setContentHolder(new ViewHolder(R.layout.attach_dialog_layout))
-                .setExpanded(false)
-                .setGravity(Gravity.BOTTOM)
-                .create();
-
-        view = dialog.getHolderView();
-        heartBtn = (ImageView) view.findViewById(R.id.heartBtn);
-        funBtn = (ImageView) view.findViewById(R.id.funBtn);
-
-        heartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendSMS("love");
-                dialog.dismiss();
-               /* if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                    mContainer.clearEmojis();
-                    mContainer.addEmoji(R.drawable.hearticon);
-                    mContainer.setPer(10);
-                    mContainer.setDuration(5000);
-                    mContainer.setDropDuration(2400);
-                    mContainer.setDropFrequency(500);
-                    mContainer.startDropping();
-                }*/
-            }
-        });
-
-        funBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sendSMS("fun");
-                dialog.dismiss();
-                /*if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH) {
-                    mContainer.clearEmojis();
-                    mContainer.addEmoji(R.drawable.funicon);
-                    mContainer.setPer(10);
-                    mContainer.setDuration(5000);
-                    mContainer.setDropDuration(2400);
-                    mContainer.setDropFrequency(500);
-                    mContainer.startDropping();
-                }*/
-            }
-        });
-        dialog.show();
     }
     @Override
     public Loader onCreateLoader(int id, Bundle args) {

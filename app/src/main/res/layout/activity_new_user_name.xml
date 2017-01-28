@@ -23,18 +23,18 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:padding="30dp"
+            android:padding="10dp"
             android:src="@drawable/flowericon"
             android:layout_margin="10dp"
             android:id="@+id/flower"
-            android:layout_weight="1"
+            android:layout_weight="2"
             />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:text="It's Time\nto Choose a\nusername"
+            android:text="MalChat"
             android:gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:textSize="35sp"
             android:textColor="@color/colorPrimaryDark"
             />
@@ -42,7 +42,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="1"
+            android:layout_weight="1.5"
             android:orientation="vertical"
             >
             <EditText
@@ -50,12 +50,12 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="35dp"
+                android:layout_marginBottom="50dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
-                android:hint="Type username"
+                android:hint="Enter a username"
                 android:textColorHint="@color/colorDivider"
                 android:textColor="@color/colorPrimaryDark"
                 android:background="@drawable/apptheme_textfield_activated_holo_light"
@@ -65,19 +65,32 @@
                 />
             <Button
                 android:layout_gravity="center"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0px"
-                android:layout_marginRight="20dp"
-                android:layout_marginBottom="30dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="60dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/curved_button_background"
                 android:textColor="@color/colorIcon"
                 android:textSize="15sp"
                 android:textAllCaps="false"
                 android:text="Save"
                 android:id="@+id/saveBtn"
+                />
+            <Button
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="0px"
+                android:layout_marginRight="60dp"
+                android:layout_marginLeft="60dp"
+                android:layout_weight="1"
+                android:background="@drawable/curved_button_background"
+                android:textColor="@color/colorIcon"
+                android:textSize="15sp"
+                android:textAllCaps="false"
+                android:text="Cancel"
+                android:id="@+id/cancelBtn"
                 />
         </LinearLayout>
     </LinearLayout>

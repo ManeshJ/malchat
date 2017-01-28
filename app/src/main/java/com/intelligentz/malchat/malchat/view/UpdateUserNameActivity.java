@@ -104,7 +104,6 @@ public class UpdateUserNameActivity extends AbstractActivity {
                                 .changeAlertType(SweetAlertDialog.ERROR_TYPE);
                         break;
                 }
-                unregisterBroadcastReceiver();
             }
         };
         registerReceiver(broadcastReceiver
@@ -130,13 +129,6 @@ public class UpdateUserNameActivity extends AbstractActivity {
         getApplicationContext().unregisterReceiver(receiver);
         receiver = null;
     }
-    private void unregisterBroadcastReceiver()
-    {
-        if (broadcastReceiver == null)
-            return;
-        getApplicationContext().unregisterReceiver(broadcastReceiver);
-        broadcastReceiver = null;
-    }
 
     private void registerReceiver()
     {
@@ -152,8 +144,8 @@ public class UpdateUserNameActivity extends AbstractActivity {
         return new SmsReceiver(new MessageReceiver() {
             @Override
             public void onMessage(String from, String text) {
-                String successmsg = "Congratulations! Oyage username eka thamai";
-                String alreadyMsg = "Oya daapu username eka thawa ekkenek kalinma";
+                String successmsg = "Congratulations! Oyage aluth username eka thamai";
+                String alreadyMsg = "Oops! Username already exist";
                 final SweetAlertDialog.OnSweetClickListener successListener = new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {

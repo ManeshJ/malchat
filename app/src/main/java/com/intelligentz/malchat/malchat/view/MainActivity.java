@@ -33,6 +33,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,14 +58,12 @@ import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloating
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AbstractActivity implements LoaderManager.LoaderCallbacks, RapidFloatingActionContentLabelList.OnRapidFloatingActionContentLabelListListener {
+public class MainActivity extends AbstractActivity implements LoaderManager.LoaderCallbacks {
     private RecyclerView recyclerView;
     private AccountsRecyclerAdaptor recyclerAdaptor;
     private RecyclerView.LayoutManager accountslayoutManager;
     private CollapsingToolbarLayout toolbarLayout;
-    private RapidFloatingActionButton fab;
-    private RapidFloatingActionHelper fabHelper;
-    private RapidFloatingActionLayout fabLayout;
+    private FloatingActionButton fab;
     private String username;
     private String chatusername;
     private DialogPlus funDialog;
@@ -86,6 +85,10 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
         toolbarLayout.setBackgroundResource(R.drawable.header_image);
         configureFab();
         getSupportLoaderManager().initLoader(1, null, this);
+        boolean isNewUser = getIntent().getBooleanExtra("newuser",false);
+        if (isNewUser){
+            showNewUserMessage();
+        }
         username = getIntent().getStringExtra("username");
         chatusername = getIntent().getStringExtra("chatusername");
         if (chatusername != null && !chatusername.equals("MalChat")) {
@@ -179,7 +182,7 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
     }
 
     private void configureFab() {
-        fab = (RapidFloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -187,120 +190,28 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
 //                        .setAction("Action", null).show();
 //            }
 //        });
-        fabLayout = (RapidFloatingActionLayout) findViewById(R.id.activity_main_rfal);
-        RapidFloatingActionContentLabelList rfaContent = new RapidFloatingActionContentLabelList(this);
-        rfaContent.setOnRapidFloatingActionContentLabelListListener(this);
-        List<RFACLabelItem> items = new ArrayList<>();
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("Fun Message")
-                .setResId(R.drawable.funicon)
-                .setIconNormalColor(0xff056f00)
-                .setIconPressedColor(0xff0d5302)
-                .setLabelColor(0xff056f00)
-                .setWrapper(0)
-        );
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("Love Message")
-                .setResId(R.drawable.hearticon)
-                .setIconNormalColor(0xffFFCC00)
-                .setIconPressedColor(0xff3e2723)
-                .setLabelColor(0xffFF3300)
-                .setLabelSizeSp(14)
-                .setWrapper(1)
-        );
-        items.add(new RFACLabelItem<Integer>()
-                .setLabel("Text Message")
-                .setResId(R.drawable.textmsgicon)
-                .setIconNormalColor(0xff0099FF)
-                .setIconPressedColor(0xffbf360c)
-                .setLabelColor(0xff0099FF)
-                .setWrapper(2)
-        );
-        rfaContent
-                .setItems(items)
-                .setIconShadowRadius(ABTextUtil.dip2px(this, 5))
-                .setIconShadowColor(0xff888888)
-                .setIconShadowDy(ABTextUtil.dip2px(this, 5))
-        ;
-        fabHelper = new RapidFloatingActionHelper(
-                this,
-                fabLayout,
-                fab,
-                rfaContent
-        ).build();
+        Intent intent = new Intent(this, NewChatActivity.class);
+        startActivity(intent);
     }
 
-    @Override
-    public void onRFACItemLabelClick(int i, RFACLabelItem rfacLabelItem) {
-//        Toast.makeText(this, "clicked label: " + i, Toast.LENGTH_SHORT).show();
-//        fabHelper.toggleContent();
-    }
-
-    @Override
-    public void onRFACItemIconClick(int i, RFACLabelItem rfacLabelItem) {
-        //Toast.makeText(this, "clicked icon: " + i, Toast.LENGTH_SHORT).show();
-        switch (i) {
-            case 0:
-                showfundialog();
-                break;
-            case 1:
-                showlovedialog();
-                break;
-            case 2:
-                Intent intent = new Intent(this, NewChatActivity.class);
-                startActivity(intent);
-        }
-        fabHelper.toggleContent();
-    }
-
-    private void showfundialog() {
+    private void showNewUserMessage() {
         funDialog = DialogPlus.newDialog(this)
-                .setContentHolder(new ViewHolder(R.layout.fun_dialog_layout))
+                .setContentHolder(new ViewHolder(R.layout.newusermainactivitydialoglayout))
                 .setContentBackgroundResource(R.drawable.fun_message_fragment_background)
                 .setExpanded(false)
                 .setGravity(Gravity.CENTER)
                 .create();
-
         fun_message_view = funDialog.getHolderView();
-        sendBtn = (ImageView) fun_message_view.findViewById(R.id.sendBtn);
-        usernameTxt = (EditText) fun_message_view.findViewById(R.id.usernameTxt);
-        sendBtn.setOnClickListener(new View.OnClickListener() {
+        Button okBtn = (Button) fun_message_view.findViewById(R.id.okbtn);
+        okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra("username", usernameTxt.getText().toString().trim());
-                intent.putExtra("messageType","fun");
-                startActivity(intent);
                 funDialog.dismiss();
             }
         });
         funDialog.show();
     }
 
-    private void showlovedialog() {
-        funDialog = DialogPlus.newDialog(this)
-                .setContentHolder(new ViewHolder(R.layout.fun_dialog_layout))
-                .setContentBackgroundResource(R.drawable.fun_message_fragment_background)
-                .setExpanded(false)
-                .setGravity(Gravity.CENTER)
-                .create();
-
-        fun_message_view = funDialog.getHolderView();
-        sendBtn = (ImageView) fun_message_view.findViewById(R.id.sendBtn);
-        ((TextView)fun_message_view.findViewById(R.id.headerTxt)).setText("New Love Message");
-        usernameTxt = (EditText) fun_message_view.findViewById(R.id.usernameTxt);
-        sendBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(context, ChatActivity.class);
-                intent.putExtra("username", usernameTxt.getText().toString().trim());
-                intent.putExtra("messageType","love");
-                startActivity(intent);
-                funDialog.dismiss();
-            }
-        });
-        funDialog.show();
-    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -311,7 +222,6 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_upusername) {
             Intent intent = new Intent(this, UpdateUserNameActivity.class);
             startActivity(intent);

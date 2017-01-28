@@ -55,9 +55,9 @@ public class SplashActivity extends AbstractActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS}, REQUEST_CODE_ASK_PERMISSIONS);
         }else {
-            while (System.currentTimeMillis() - startTime < 3000) {
-
-            }
+//            while (System.currentTimeMillis() - startTime < 3000) {
+//
+//            }
             goToNextActivity();
         }
     }
@@ -72,9 +72,9 @@ public class SplashActivity extends AbstractActivity {
                     return;
                 }
             }
-            while (System.currentTimeMillis() - startTime < 3000) {
-
-            }
+//            while (System.currentTimeMillis() - startTime < 3000) {
+//
+//            }
             goToNextActivity();
         }
     }

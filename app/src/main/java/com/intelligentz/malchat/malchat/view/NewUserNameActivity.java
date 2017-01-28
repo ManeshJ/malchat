@@ -24,6 +24,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class NewUserNameActivity extends AbstractActivity {
     private Button saveBtn;
+    private Button cancelBtn;
     private SmsReceiver receiver;
     String username;
     private SweetAlertDialog progressDialog;
@@ -36,11 +37,18 @@ public class NewUserNameActivity extends AbstractActivity {
         setContentView(R.layout.activity_new_user_name);
         context = this;
         saveBtn = (Button) findViewById(R.id.saveBtn);
+        cancelBtn = (Button) findViewById(R.id.cancelBtn);
         usernameTxt = (EditText) findViewById(R.id.usernameTxt);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 saveUserName();
+            }
+        });
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
     }
@@ -126,13 +134,6 @@ public class NewUserNameActivity extends AbstractActivity {
         getApplicationContext().unregisterReceiver(receiver);
         receiver = null;
     }
-    private void unregisterBroadcastReceiver()
-    {
-        if (broadcastReceiver == null)
-            return;
-        getApplicationContext().unregisterReceiver(broadcastReceiver);
-        broadcastReceiver = null;
-    }
 
     private void registerReceiver()
     {
@@ -164,6 +165,7 @@ public class NewUserNameActivity extends AbstractActivity {
                         editor.commit();
                         Intent intent = new Intent(context, MainActivity.class);
                         intent.putExtra("username",username);
+                        intent.putExtra("newuser",true);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         unregisterReceiver();

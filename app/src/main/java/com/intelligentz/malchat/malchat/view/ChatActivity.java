@@ -2,9 +2,11 @@ package com.intelligentz.malchat.malchat.view;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -72,8 +74,8 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
     public Loader onCreateLoader(int id, Bundle args) {
         String[] projection = new String[]{"address", "date", "body"};
 //        String selection = "address=? AND body LIKE ?";
-        String selection = "address=? AND (body LIKE ? OR body LIKE ?)";
-        String[] selectionArgs = new String[]{"77255", "From -"+username+"\n%", "Mal chat "+username+" %"};
+        String selection = "address=? AND (body LIKE ? OR body LIKE ? OR body LIKE ?)";
+        String[] selectionArgs = new String[]{"77255", "From -"+username+"\n%", "Mal chat "+username+"%"};
         String orderBy = "date desc";
         return new CursorLoader(this, Uri.parse("content://sms"), projection, selection, selectionArgs, orderBy);
     }
@@ -175,4 +177,12 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences mPrefs = getSharedPreferences("malchat.lastseen", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = mPrefs.edit();
+        editor.putLong(username, System.currentTimeMillis());
+        editor.commit();
+    }
 }

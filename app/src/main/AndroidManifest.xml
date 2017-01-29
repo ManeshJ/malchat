@@ -50,7 +50,12 @@
             android:name=".view.SaveExistingUserName"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.UpdateUserNameActivity" />
-        <activity android:name=".view.RegisterActivity"
+        <activity
+            android:name=".view.RegisterActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".view.ScrollingActivityTest"
+            android:label="@string/title_activity_scrolling_test"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

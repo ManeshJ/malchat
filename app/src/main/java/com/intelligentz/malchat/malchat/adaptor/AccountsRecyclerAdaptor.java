@@ -2,6 +2,7 @@ package com.intelligentz.malchat.malchat.adaptor;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ import java.util.Date;
  * Created by lakshan on 11/5/16.
  */
 public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecyclerAdaptor.RecyclerViewHolder> implements View.OnClickListener{
+    private static int lastvisitedpos = 0;
     ArrayList<ChatMessage> mesageList = null;
     Context context = null;
     MainActivity activity;
@@ -42,6 +44,13 @@ public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecycl
         holder.contactNameTxt.setText(message.getAddress());
         holder.lastMsgTxt.setText(message.getBody());
         long val = Long.valueOf(message.getDate());
+        SharedPreferences mPrefs = context.getSharedPreferences("malchat.lastseen", Context.MODE_PRIVATE);
+        Long lastseen = mPrefs.getLong(message.getAddress(), 0);
+        if (lastseen < val) {
+            holder.new_message.setVisibility(View.VISIBLE);
+        } else {
+            holder.new_message.setVisibility(View.INVISIBLE);
+        }
         Date toDate = new Date(System.currentTimeMillis());
         Date date=new Date(val);
         SimpleDateFormat df2 = new SimpleDateFormat("MMM  dd");
@@ -60,13 +69,16 @@ public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecycl
     public void onClick(View view) {
 
     }
-
+    public void changeLastPos (){
+        notifyItemChanged(lastvisitedpos);
+    }
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         CircularImageView accountImageView = null;
         TextView contactNameTxt;
         TextView lastMsgTxt;
         TextView lastSeenTxt;
+        TextView new_message;
         ArrayList<ChatMessage> messageList = null;
         Context context = null;
         public RecyclerViewHolder(View itemView, Context context, ArrayList<ChatMessage> messageList) {
@@ -77,6 +89,7 @@ public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecycl
             contactNameTxt = (TextView) itemView.findViewById(R.id.contact_name);
             lastMsgTxt = (TextView) itemView.findViewById(R.id.last_msg);
             lastSeenTxt = (TextView) itemView.findViewById(R.id.last_seen);
+            new_message = (TextView) itemView.findViewById(R.id.new_message);
             accountImageView.setOnClickListener(this);
             itemView.setOnClickListener(this);
         }
@@ -85,6 +98,7 @@ public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecycl
         public void onClick(View view) {
             Intent intent = new Intent(context, ChatActivity.class);
             intent.putExtra("username",messageList.get(getAdapterPosition()).getAddress());
+            lastvisitedpos = getAdapterPosition();
             context.startActivity(intent);
         }
     }

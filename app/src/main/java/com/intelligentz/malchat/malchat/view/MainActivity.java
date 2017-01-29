@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -78,7 +79,7 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
         context = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("මල් Chat");
+//        toolbar.setTitle("මල් Chat");
         toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         //toolbarLayout.setExpandedTitleColor(getResources().getColor(R.color.colorPrimaryDark));
         toolbarLayout.setTitle("");
@@ -89,6 +90,27 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
         if (isNewUser){
             showNewUserMessage();
         }
+        final CollapsingToolbarLayout collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        collapsingToolbarLayout.setTitle(" ");
+        AppBarLayout appBarLayout = (AppBarLayout) findViewById(R.id.app_bar);
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    collapsingToolbarLayout.setTitle("මල් Chat");
+                    isShow = true;
+                } else if(isShow) {
+                    collapsingToolbarLayout.setTitle(" ");//carefull there should a space between double quote otherwise it wont work
+                    isShow = false;
+                }
+            }
+        });
         username = getIntent().getStringExtra("username");
         chatusername = getIntent().getStringExtra("chatusername");
         if (chatusername != null && !chatusername.equals("MalChat")) {
@@ -190,8 +212,13 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
 //                        .setAction("Action", null).show();
 //            }
 //        });
-        Intent intent = new Intent(this, NewChatActivity.class);
-        startActivity(intent);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, NewChatActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void showNewUserMessage() {
@@ -211,6 +238,24 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
         });
         funDialog.show();
     }
+    private void showMyUsername() {
+        funDialog = DialogPlus.newDialog(this)
+                .setContentHolder(new ViewHolder(R.layout.myusernamelayout))
+                .setExpanded(false)
+                .setGravity(Gravity.TOP)
+                .create();
+        fun_message_view = funDialog.getHolderView();
+        Button okBtn = (Button) fun_message_view.findViewById(R.id.okbtn);
+        TextView usernametxt = (TextView) fun_message_view.findViewById(R.id.headerTxt);
+        usernametxt.setText(username);
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                funDialog.dismiss();
+            }
+        });
+        funDialog.show();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -222,12 +267,13 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_upusername) {
+        if (id == R.id.update_username) {
             Intent intent = new Intent(this, UpdateUserNameActivity.class);
             startActivity(intent);
             return true;
+        } else if(id == R.id.my_username) {
+            showMyUsername();
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -244,7 +290,10 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
     @Override
     protected void onResume() {
         super.onResume();
-        getSupportActionBar().setTitle("මල්Chat");
+        //getSupportActionBar().setTitle("මල්Chat");
+        if (recyclerAdaptor != null ){
+            recyclerAdaptor.changeLastPos();
+        }
     }
 
 }

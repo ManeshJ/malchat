@@ -79,7 +79,13 @@ public class RegisterActivity extends AppCompatActivity {
             public void onMessage(String from, String text) {
                 String successmsg = "You have successfully subscribed to MalChat";
                 String alreadyMsg = "You are already registered to the MalChat";
-                if (from.equals("ideamart") && (text.contains(successmsg) || text.contains(alreadyMsg))){
+                final SweetAlertDialog.OnSweetClickListener successListener = new SweetAlertDialog.OnSweetClickListener() {
+                    @Override
+                    public void onClick(SweetAlertDialog sweetAlertDialog) {
+                        sweetAlertDialog.dismissWithAnimation();
+                    }
+                };
+                if (from.equals("ideamart") && text.contains(successmsg)){
                     Intent intent = new Intent(context, NewUserNameActivity.class);
                     startActivity(intent);
                     if (progressDialog.isShowing()) {
@@ -87,6 +93,13 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     unregisterReceiver();
                     finish();
+                } else if (from.equals("ideamart") && text.contains(alreadyMsg)){
+                    progressDialog.setTitleText("Failed!")
+                            .setContentText("Oops! You are already registered to MalChat")
+                            .setConfirmText("OK")
+                            .setConfirmClickListener(successListener)
+                            .changeAlertType(SweetAlertDialog.WARNING_TYPE);
+                    unregisterReceiver();
                 }
             }
         });

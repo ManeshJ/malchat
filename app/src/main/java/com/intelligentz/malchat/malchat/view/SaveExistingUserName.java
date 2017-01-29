@@ -32,6 +32,12 @@ public class SaveExistingUserName extends AbstractActivity {
                 saveUserName();
             }
         });
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
     private void saveUserName() {
@@ -41,7 +47,7 @@ public class SaveExistingUserName extends AbstractActivity {
         editor.putString("username",username);
         editor.commit();
         Intent intent = new Intent(context, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("username",username);
         intent.putExtra("newuser",true);
         startActivity(intent);

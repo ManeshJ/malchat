@@ -41,6 +41,24 @@
         android:textSize="14dp"
         />
     <TextView
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:id="@+id/new_message"
+        android:text="New"
+        android:gravity="center"
+        android:background="@drawable/curved_button_background"
+        android:textColor="@color/colorIcon"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:visibility="invisible"
+        android:layout_above="@id/last_seen"
+        android:textSize="14dp"
+        />
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/last_msg"

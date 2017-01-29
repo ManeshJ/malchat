@@ -164,6 +164,7 @@ public class NewUserNameActivity extends AbstractActivity {
                         editor.putString("username",username);
                         editor.commit();
                         Intent intent = new Intent(context, MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("username",username);
                         intent.putExtra("newuser",true);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -175,7 +176,7 @@ public class NewUserNameActivity extends AbstractActivity {
                         finish();
                     } else if (text.contains(alreadyMsg)) {
                         progressDialog.setTitleText("Failed!")
-                                .setContentText("Someone is already using that username. Please try another one.")
+                                .setContentText("Oops! Username you entered already exists. Please enter a different one.")
                                 .setConfirmText("OK")
                                 .setConfirmClickListener(successListener)
                                 .changeAlertType(SweetAlertDialog.WARNING_TYPE);

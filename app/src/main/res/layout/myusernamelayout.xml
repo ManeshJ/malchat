@@ -7,25 +7,41 @@
     android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <ImageView
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:background="@color/colorIcon">
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="0px"
-            android:layout_weight="9"
-            android:src="@drawable/newuserfirstmainwindow"
+            android:layout_weight="2"
+            android:text="You username:"
+            android:textSize="30sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textStyle="bold"
+            android:layout_gravity="bottom"
+            android:gravity="bottom|center_horizontal"
+            android:layout_marginTop="20dp"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="4"
             android:gravity="center"
+            android:layout_marginTop="25dp"
+            android:layout_marginBottom="25dp"
+            android:textSize="20sp"
+            android:text="My Username"
             android:id="@+id/headerTxt"
             />
         <Button
-            android:layout_weight="1"
-            android:layout_width="150dp"
+            android:layout_weight="1.5"
+            android:layout_width="110dp"
             android:layout_height="0px"
             android:layout_gravity="center"
             android:textColor="@color/colorIcon"
             android:textStyle="bold"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="35dp"
             android:text="OK"
             android:id="@+id/okbtn"
             android:background="@drawable/curved_button_background"/>

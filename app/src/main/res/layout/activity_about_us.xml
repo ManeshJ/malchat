@@ -70,11 +70,13 @@
             android:layout_height="0px"
             android:layout_weight="1.2"
             android:orientation="horizontal"
+            android:id="@+id/calllayout"
             android:gravity="center_horizontal">
             <ImageView
                 android:layout_width="0px"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:id="@+id/callicon"
                 android:src="@drawable/callicon"/>
             <TextView
                 android:layout_width="0px"
@@ -82,7 +84,8 @@
                 android:layout_height="match_parent"
                 android:text="(+94) 77 347 2649 / 71 873 9322"
                 android:textSize="15sp"
-                android:gravity="center_vertical"/>
+                android:gravity="center_vertical"
+                android:id="@+id/calltxt"/>
         </LinearLayout>
 
             <LinearLayout
@@ -90,39 +93,45 @@
                 android:layout_height="0px"
                 android:layout_weight="1.2"
                 android:orientation="horizontal"
+                android:id="@+id/maillayout"
                 android:gravity="center_horizontal">
                 <ImageView
                     android:layout_width="0px"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:src="@drawable/mailicon"/>
+                    android:src="@drawable/mailicon"
+                    android:id="@+id/maiicon"/>
                 <TextView
                     android:layout_width="0px"
                     android:layout_weight="3"
                     android:layout_height="match_parent"
                     android:text="intelligentz.lk@gmail.com"
                     android:textSize="15sp"
-                    android:gravity="center_vertical"/>
+                    android:gravity="center_vertical"
+                    android:id="@+id/mailtxt"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0px"
                 android:layout_weight="1.2"
                 android:orientation="horizontal"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:id="@+id/fblayout">
                 <ImageView
                     android:layout_width="0px"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
-                    android:src="@drawable/fbicon"/>
+                    android:src="@drawable/fbicon"
+                    android:id="@+id/fbicon"/>
                 <TextView
                     android:layout_width="0px"
                     android:layout_weight="3"
                     android:layout_height="match_parent"
                     android:text="/IntelliGentz.lk"
                     android:textSize="15sp"
-                    android:gravity="center_vertical"/>
+                    android:gravity="center_vertical"
+                    android:id="@+id/fbtxt"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

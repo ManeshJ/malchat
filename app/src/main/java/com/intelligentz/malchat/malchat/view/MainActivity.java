@@ -56,7 +56,7 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
     private RecyclerView.LayoutManager accountslayoutManager;
     private CollapsingToolbarLayout toolbarLayout;
     private FloatingActionButton fab;
-    private String username;
+    public static String username;
     private String chatusername;
     private DialogPlus funDialog;
     private View fun_message_view;
@@ -249,6 +249,18 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
             showMyUsername();
         } else if (id == R.id.action_faq) {
             Intent intent = new Intent(this, FAQActicity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_about) {
+            Intent intent = new Intent(this, AboutUsActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_contact) {
+            Intent intent = new Intent(this, ContactUsActivity.class);
+            startActivity(intent);
+            return true;
+        } else if (id == R.id.action_terms) {
+            Intent intent = new Intent(this, TermsActivity.class);
             startActivity(intent);
             return true;
         }

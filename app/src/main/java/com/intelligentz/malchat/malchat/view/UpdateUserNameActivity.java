@@ -158,6 +158,7 @@ public class UpdateUserNameActivity extends AbstractActivity {
                         SharedPreferences.Editor editor = mPrefs.edit();
                         editor.putString("username",username);
                         editor.commit();
+                        MainActivity.username = username;
                         unregisterReceiver();
                         if (progressDialog.isShowing()) {
                             progressDialog.dismissWithAnimation();

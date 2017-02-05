@@ -53,7 +53,7 @@ public class SplashActivity extends AbstractActivity {
 
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS}, REQUEST_CODE_ASK_PERMISSIONS);
+            requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.CALL_PHONE}, REQUEST_CODE_ASK_PERMISSIONS);
         }else {
 //            while (System.currentTimeMillis() - startTime < 3000) {
 //

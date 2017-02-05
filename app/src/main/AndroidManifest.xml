@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
     ;
     <application
         android:name=".ReceiverApplication"
@@ -58,7 +59,9 @@
             android:label="@string/title_activity_scrolling_test"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.FAQActicity" />
-        <activity android:name=".view.AboutUsActivity"></activity>
+        <activity android:name=".view.AboutUsActivity" />
+        <activity android:name=".view.ContactUsActivity" />
+        <activity android:name=".view.TermsActivity"></activity>
     </application>
 
 </manifest>

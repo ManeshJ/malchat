@@ -44,17 +44,8 @@ import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.adaptor.AccountsRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.model.ChatMessage;
-import com.intelligentz.malchat.malchat.model.Contact;
-import com.luolc.emojirain.EmojiRainLayout;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
-import com.wangjie.androidbucket.utils.ABTextUtil;
-import com.wangjie.androidbucket.utils.imageprocess.ABShape;
-import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionButton;
-import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionHelper;
-import com.wangjie.rapidfloatingactionbutton.RapidFloatingActionLayout;
-import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RFACLabelItem;
-import com.wangjie.rapidfloatingactionbutton.contentimpl.labellist.RapidFloatingActionContentLabelList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -124,23 +115,6 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         accountslayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(accountslayoutManager);
-//        ArrayList<Contact> contactList = new ArrayList<>();
-//        contactList.add(new Contact("Pasindu"));
-//        contactList.add(new Contact("Dineth"));
-//        contactList.add(new Contact("Chamika"));
-//        contactList.add(new Contact("Dilum"));
-//        contactList.add(new Contact("Heshan"));
-//        contactList.add(new Contact("Manesh"));
-//        contactList.add(new Contact("Sandeepa"));
-//        contactList.add(new Contact("Yasiru"));
-//        contactList.add(new Contact("Shalith"));
-//        contactList.add(new Contact("Hansika"));
-//        contactList.add(new Contact("Kumudu"));
-//        contactList.add(new Contact("Sameera"));
-//        contactList.add(new Contact("Darika"));
-//        contactList.add(new Contact("Hashini"));
-//        contactList.add(new Contact("Keet"));
-//        contactList.add(new Contact("Vindula"));
         recyclerAdaptor = new AccountsRecyclerAdaptor(messageList, this, this);
         recyclerView.setAdapter(recyclerAdaptor);
         recyclerView.setNestedScrollingEnabled(false);
@@ -273,6 +247,10 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
             return true;
         } else if(id == R.id.my_username) {
             showMyUsername();
+        } else if (id == R.id.action_faq) {
+            Intent intent = new Intent(this, FAQActicity.class);
+            startActivity(intent);
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }

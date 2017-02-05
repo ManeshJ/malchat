@@ -56,7 +56,9 @@
         <activity
             android:name=".view.ScrollingActivityTest"
             android:label="@string/title_activity_scrolling_test"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.FAQActicity" />
+        <activity android:name=".view.AboutUsActivity"></activity>
     </application>
 
 </manifest>

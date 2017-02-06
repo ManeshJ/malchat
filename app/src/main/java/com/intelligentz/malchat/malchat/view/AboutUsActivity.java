@@ -117,7 +117,7 @@ public class AboutUsActivity extends AppCompatActivity {
                 emailIntent.putExtra(Intent.EXTRA_TEXT, " ");
 
                 try {
-                    startActivity(Intent.createChooser(emailIntent, "Sending mail..."));
+                    startActivity(Intent.createChooser(emailIntent, "Send a mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {
                     Toast.makeText(AboutUsActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
                 }
@@ -129,6 +129,13 @@ public class AboutUsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent fbintent = newFacebookIntent(getPackageManager(),"https://www.facebook.com/IntelliGentz.lk");
                 startActivity(fbintent);
+            }
+        });
+
+        logo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                animatetada();
             }
         });
     }
@@ -147,6 +154,12 @@ public class AboutUsActivity extends AppCompatActivity {
     }
     private void animate(){
         int duration = 2000;
+        YoYo.with(Techniques.Shake)
+                .duration(duration).playOn(logo);
+    }
+
+    private void animatetada(){
+        int duration = 1000;
         YoYo.with(Techniques.Tada)
                 .duration(duration).playOn(logo);
     }

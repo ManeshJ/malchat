@@ -24,27 +24,28 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
                 <ImageView
-                    android:layout_marginTop="3dp"
-                    android:layout_width="25sp"
-                    android:layout_height="25sp"
+                    android:layout_width="14sp"
+                    android:layout_height="14sp"
                     android:src="@drawable/bullet"
+                    android:layout_marginTop="3dp"
                     android:layout_marginRight="10dp"
+                    android:layout_gravity="top"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Which subscribers can use the application?"
-                    android:textSize="25sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"/>
             </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Dialog and Hutch"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
-                android:textSize="20sp"/>
+                android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -56,26 +57,28 @@
                 android:orientation="horizontal">
                 <ImageView
                     android:layout_marginTop="3dp"
-                    android:layout_width="25sp"
-                    android:layout_height="25sp"
+
+                    android:layout_width="14sp"
+                    android:layout_height="14sp"
                     android:src="@drawable/bullet"
                     android:layout_marginRight="10dp"
+                    android:layout_gravity="top"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Is there another Mal Chat service?"
-                    android:textSize="25sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"/>
             </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="No"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
-                android:textSize="20sp"/>
+                android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,26 +90,28 @@
                 android:orientation="horizontal">
                 <ImageView
                     android:layout_marginTop="3dp"
-                    android:layout_width="25sp"
-                    android:layout_height="25sp"
+
+                    android:layout_width="14sp"
+                    android:layout_height="14sp"
                     android:src="@drawable/bullet"
                     android:layout_marginRight="10dp"
+                    android:layout_gravity="top"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="How much is Rs.3+tax per day?"
-                    android:textSize="25sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"/>
             </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Rs.4.50 cents per day "
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
-                android:textSize="20sp"/>
+                android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -118,16 +123,18 @@
                 android:orientation="horizontal">
                 <ImageView
                     android:layout_marginTop="3dp"
-                    android:layout_width="25sp"
-                    android:layout_height="25sp"
+
+                    android:layout_width="14sp"
+                    android:layout_height="14sp"
                     android:src="@drawable/bullet"
                     android:layout_marginRight="10dp"
+                    android:layout_gravity="top"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Who can we message to?"
-                    android:textSize="25sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"/>
             </LinearLayout>
             <TextView
@@ -135,10 +142,10 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="40dp"
                 android:text="Any Mal chat user who has setup a username"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
-                android:textSize="20sp"/>
+                android:textSize="15sp"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -150,26 +157,30 @@
                 android:orientation="horizontal">
                 <ImageView
                     android:layout_marginTop="3dp"
-                    android:layout_width="25sp"
-                    android:layout_height="25sp"
+
+                    android:layout_width="14sp"
+                    android:layout_height="14sp"
                     android:src="@drawable/bullet"
                     android:layout_marginRight="10dp"
+                    android:layout_gravity="top"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Can we use the android application even after unregistering?"
-                    android:textSize="25sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"/>
             </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="No"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
-                android:textSize="20sp"/>
+                android:textSize="15sp"
+                android:id="@+id/textView" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -181,27 +192,29 @@
                 android:orientation="horizontal">
                 <ImageView
                     android:layout_marginTop="3dp"
-                    android:layout_width="25sp"
-                    android:layout_height="25sp"
+
+                    android:layout_width="14sp"
+                    android:layout_height="14sp"
                     android:src="@drawable/bullet"
                     android:layout_marginRight="10dp"
+                    android:layout_gravity="top"
                     />
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="How to unregister from the service?"
-                    android:textSize="25sp"
+                    android:textSize="15sp"
                     android:textStyle="bold"/>
             </LinearLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Type UNREG Mal and send to 77255 from your normal messaging client"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="15dp"
                 android:gravity="center"
                 android:paddingLeft="40dp"
-                android:textSize="20sp"/>
+                android:textSize="15sp"/>
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

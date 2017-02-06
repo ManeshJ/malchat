@@ -43,6 +43,7 @@ public class NewChatActivity extends AbstractActivity implements LoaderManager.L
         msgTxt = (EditText) findViewById(R.id.msgTxt);
         recipTxt = (EditText) findViewById(R.id.recipTxt);
         reciLayout = (LinearLayout) findViewById(R.id.recipLayout);
+        getSupportActionBar().setTitle("New Chat");
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

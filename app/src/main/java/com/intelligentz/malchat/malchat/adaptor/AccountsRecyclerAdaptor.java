@@ -12,8 +12,8 @@ import android.widget.TextView;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.model.ChatMessage;
-import com.intelligentz.malchat.malchat.view.ChatActivity;
-import com.intelligentz.malchat.malchat.view.MainActivity;
+import com.intelligentz.malchat.malchat.view.b;
+import com.intelligentz.malchat.malchat.view.f;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,8 +26,8 @@ public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecycl
     private static int lastvisitedpos = 0;
     ArrayList<ChatMessage> mesageList = null;
     Context context = null;
-    MainActivity activity;
-    public AccountsRecyclerAdaptor(ArrayList<ChatMessage> mesageList, Context context, MainActivity activity) {
+    f activity;
+    public AccountsRecyclerAdaptor(ArrayList<ChatMessage> mesageList, Context context, f activity) {
         this.context = context;
         this.mesageList = mesageList;
         this.activity = activity;
@@ -96,7 +96,7 @@ public class AccountsRecyclerAdaptor extends RecyclerView.Adapter<AccountsRecycl
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(context, ChatActivity.class);
+            Intent intent = new Intent(context, b.class);
             intent.putExtra("username",messageList.get(getAdapterPosition()).getAddress());
             lastvisitedpos = getAdapterPosition();
             context.startActivity(intent);

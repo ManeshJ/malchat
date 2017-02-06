@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.MenuItem;
@@ -22,7 +21,7 @@ import com.intelligentz.malchat.malchat.sms.SmsReceiver;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class UpdateUserNameActivity extends AbstractActivity {
+public class o extends AbstractActivity {
     private Button saveBtn;
     private SmsReceiver receiver;
     String username;
@@ -158,7 +157,7 @@ public class UpdateUserNameActivity extends AbstractActivity {
                         SharedPreferences.Editor editor = mPrefs.edit();
                         editor.putString("username",username);
                         editor.commit();
-                        MainActivity.username = username;
+                        f.username = username;
                         unregisterReceiver();
                         if (progressDialog.isShowing()) {
                             progressDialog.dismissWithAnimation();

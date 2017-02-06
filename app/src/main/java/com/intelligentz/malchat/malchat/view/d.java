@@ -7,7 +7,7 @@ import android.view.MenuItem;
 
 import com.intelligentz.malchat.malchat.R;
 
-public class FAQActicity extends AppCompatActivity {
+public class d extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

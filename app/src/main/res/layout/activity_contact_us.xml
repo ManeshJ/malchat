@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:paddingTop="25dp"
     android:layout_height="match_parent"
-    tools:context="com.intelligentz.malchat.malchat.view.ContactUsActivity">
+    tools:context="com.intelligentz.malchat.malchat.view.c">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"

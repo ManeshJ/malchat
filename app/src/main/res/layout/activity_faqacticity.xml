@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    tools:context="com.intelligentz.malchat.malchat.view.FAQActicity">
+    tools:context="com.intelligentz.malchat.malchat.view.d">
     <LinearLayout
         android:id="@+id/activity_faqacticity"
         android:orientation="vertical"

@@ -9,7 +9,7 @@ import android.view.View;
 
 import com.intelligentz.malchat.malchat.R;
 
-public class ScrollingActivityTest extends AppCompatActivity {
+public class k extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

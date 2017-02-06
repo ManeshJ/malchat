@@ -12,9 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.intelligentz.malchat.malchat.R;
-import com.intelligentz.malchat.malchat.model.Contact;
 
-public class ContactUsActivity extends AppCompatActivity {
+public class c extends AppCompatActivity {
     private LinearLayout facebooklayout;
     private LinearLayout mailLayout;
     private LinearLayout instalayout;
@@ -52,7 +51,7 @@ public class ContactUsActivity extends AppCompatActivity {
                 try {
                     startActivity(Intent.createChooser(emailIntent, "Send a mail..."));
                 } catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(ContactUsActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(c.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

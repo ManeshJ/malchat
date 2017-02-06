@@ -1,34 +1,23 @@
 package com.intelligentz.malchat.malchat.view;
 
-import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
-import com.intelligentz.malchat.malchat.model.Contact;
-import com.intelligentz.malchat.malchat.sms.MessageReceiver;
 import com.intelligentz.malchat.malchat.sms.SmsReceiver;
-import com.nineoldandroids.animation.Animator;
-
-import org.w3c.dom.Text;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class LoginActivity extends AbstractActivity {
+public class e extends AbstractActivity {
     private TextView hiTxt;
     private ImageView flower;
     private Button already;
@@ -49,7 +38,7 @@ public class LoginActivity extends AbstractActivity {
         already.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, UserNameChoosingActivity.class);
+                Intent intent = new Intent(context, n.class);
                 startActivity(intent);
             }
         });
@@ -57,7 +46,7 @@ public class LoginActivity extends AbstractActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, RegisterActivity.class);
+                Intent intent = new Intent(context, i.class);
                 startActivity(intent);
             }
         });

@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="20dp"
-    tools:context="com.intelligentz.malchat.malchat.view.TermsActivity">
+    tools:context="com.intelligentz.malchat.malchat.view.m">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

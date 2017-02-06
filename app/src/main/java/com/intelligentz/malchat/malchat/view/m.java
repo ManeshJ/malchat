@@ -6,7 +6,7 @@ import android.view.MenuItem;
 
 import com.intelligentz.malchat.malchat.R;
 
-public class TermsActivity extends AppCompatActivity {
+public class m extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

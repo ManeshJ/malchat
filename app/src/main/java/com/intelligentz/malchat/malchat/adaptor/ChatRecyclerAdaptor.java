@@ -10,8 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.model.ChatMessage;
-import com.intelligentz.malchat.malchat.view.ChatActivity;
-import com.intelligentz.malchat.malchat.view.MainActivity;
+import com.intelligentz.malchat.malchat.view.b;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -103,7 +102,7 @@ public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewH
 
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(context, ChatActivity.class);
+            Intent intent = new Intent(context, b.class);
             context.startActivity(intent);
         }
     }

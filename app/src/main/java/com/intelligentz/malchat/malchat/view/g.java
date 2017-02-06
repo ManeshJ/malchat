@@ -1,12 +1,7 @@
 package com.intelligentz.malchat.malchat.view;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
-import android.provider.Settings;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -15,63 +10,58 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
-import com.intelligentz.malchat.malchat.adaptor.AccountsRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.adaptor.ChatRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.model.ChatMessage;
 
 import java.util.ArrayList;
 
-public class ChatActivity extends AbstractActivity implements LoaderManager.LoaderCallbacks{
+public class g extends AbstractActivity implements LoaderManager.LoaderCallbacks{
     private String username;
     private RecyclerView recyclerView;
     private ChatRecyclerAdaptor recyclerAdaptor;
     private RecyclerView.LayoutManager chatlayoutManager;
     private ImageView imageView;
     private EditText msgTxt;
-    private Context context;
-    private ArrayList<ChatMessage> messageList;
-
+    private EditText recipTxt;
+    private LinearLayout reciLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
-        context = this;
+        setContentView(R.layout.activity_new_chat);
         username = getIntent().getStringExtra("username");
         getSupportActionBar().setTitle(username);
         imageView = (ImageView) findViewById(R.id.send_btn);
         msgTxt = (EditText) findViewById(R.id.msgTxt);
+        recipTxt = (EditText) findViewById(R.id.recipTxt);
+        reciLayout = (LinearLayout) findViewById(R.id.recipLayout);
+        getSupportActionBar().setTitle("New Chat");
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!msgTxt.getText().toString().isEmpty()) {
+                if (!recipTxt.getText().toString().isEmpty() && !msgTxt.getText().toString().isEmpty()) {
                     sendSMS(msgTxt.getText().toString());
-                    msgTxt.setText("");
                 }
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportLoaderManager().initLoader(1, null, this);
     }
+
     @Override
     public Loader onCreateLoader(int id, Bundle args) {
         String[] projection = new String[]{"address", "date", "body"};
 //        String selection = "address=? AND body LIKE ?";
-        String selection = "address=? AND (body LIKE ? OR body LIKE ? OR body LIKE ?)";
-        String[] selectionArgs = new String[]{"77255", "From -"+username+"\n%", "Mal chat "+username+"%"};
+        String selection = "address=? AND (body LIKE ? OR body LIKE ?)";
+        String[] selectionArgs = new String[]{"77255", "From -"+username+"\n%", "Mal chat "+username+" %"};
         String orderBy = "date desc";
         return new CursorLoader(this, Uri.parse("content://sms"), projection, selection, selectionArgs, orderBy);
     }
@@ -79,7 +69,7 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
     @Override
     public void onLoadFinished(Loader loader, Object data) {
         Cursor cursor = (Cursor) data;
-        messageList = new ArrayList<>();
+        ArrayList<ChatMessage> messageList = new ArrayList<>();
         if (cursor.moveToFirst()) { // must check the result to prevent exception
             String[] columns = new String[]{"address", "date", "body"};
             ChatMessage chatMessage;
@@ -108,7 +98,7 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
                         messageList.add(chatMessage);
                     }
                 } else if (body.startsWith("Mal")) {
-                    substrings = body.split("\\s");
+                    substrings = body.split(" ");
                     address  = substrings[2];
                     chatMessage.setType(0);
                     StringBuilder builder = new StringBuilder();
@@ -145,24 +135,28 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
         recyclerView.setLayoutManager(chatlayoutManager);
         recyclerAdaptor = new ChatRecyclerAdaptor(messageList, this, this);
         recyclerView.setAdapter(recyclerAdaptor);
-        chatlayoutManager.scrollToPosition(0);
         recyclerView.setNestedScrollingEnabled(false);
     }
 
     public void sendSMS(String msg) {
+        username = recipTxt.getText().toString().trim();
+        getSupportActionBar().setTitle(username);
         msg = "Mal chat " + username + " " + msg;
         try {
             SmsManager smsManager = SmsManager.getDefault();
             smsManager.sendTextMessage("77255", null, msg, null, null);
             Toast.makeText(getApplicationContext(), "Message Sent",
                     Toast.LENGTH_LONG).show();
+
+            msgTxt.setText("");
+            reciLayout.setVisibility(View.GONE);
+            getSupportLoaderManager().initLoader(1, null, this);
         } catch (Exception ex) {
             Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
                     Toast.LENGTH_LONG).show();
             ex.printStackTrace();
         }
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -171,14 +165,5 @@ public class ChatActivity extends AbstractActivity implements LoaderManager.Load
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        SharedPreferences mPrefs = getSharedPreferences("malchat.lastseen", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = mPrefs.edit();
-        editor.putLong(username, System.currentTimeMillis());
-        editor.commit();
     }
 }

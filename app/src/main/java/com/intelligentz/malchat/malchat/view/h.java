@@ -7,13 +7,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
@@ -22,7 +20,7 @@ import com.intelligentz.malchat.malchat.sms.SmsReceiver;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class NewUserNameActivity extends AbstractActivity {
+public class h extends AbstractActivity {
     private Button saveBtn;
     private Button cancelBtn;
     private SmsReceiver receiver;
@@ -163,7 +161,7 @@ public class NewUserNameActivity extends AbstractActivity {
                         SharedPreferences.Editor editor = mPrefs.edit();
                         editor.putString("username",username);
                         editor.commit();
-                        Intent intent = new Intent(context, MainActivity.class);
+                        Intent intent = new Intent(context, f.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("username",username);
                         intent.putExtra("newuser",true);

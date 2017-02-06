@@ -22,7 +22,7 @@ import com.intelligentz.malchat.malchat.sms.SmsReceiver;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class RegisterActivity extends AppCompatActivity {
+public class i extends AppCompatActivity {
     private TextView hiTxt;
     private ImageView flower;
     private Button already;
@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                 };
                 if (from.equals("ideamart") && text.contains(successmsg)){
-                    Intent intent = new Intent(context, NewUserNameActivity.class);
+                    Intent intent = new Intent(context, h.class);
                     startActivity(intent);
                     if (progressDialog.isShowing()) {
                         progressDialog.dismissWithAnimation();

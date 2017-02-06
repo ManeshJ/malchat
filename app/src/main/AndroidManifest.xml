@@ -20,10 +20,10 @@
         android:windowSoftInputMode="adjustResize"
         tools:overrideLibrary="com.luolc.emojirain"
         tools:replace="android:icon">
-        <service android:name=".SMSReceivingService" />
+        <service android:name=".p" />
 
         <activity
-            android:name=".view.SplashActivity"
+            android:name=".view.l"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,36 +32,36 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.MainActivity"
+            android:name=".view.f"
             android:label="@string/title_activity_main"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.ChatActivity" />
-        <activity android:name=".view.NewChatActivity" />
+        <activity android:name=".view.b" />
+        <activity android:name=".view.g" />
         <activity
-            android:name=".view.LoginActivity"
+            android:name=".view.e"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.UserNameChoosingActivity"
+            android:name=".view.n"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.NewUserNameActivity"
+            android:name=".view.h"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.SaveExistingUserName"
+            android:name=".view.j"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.UpdateUserNameActivity" />
+        <activity android:name=".view.o" />
         <activity
-            android:name=".view.RegisterActivity"
+            android:name=".view.i"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.ScrollingActivityTest"
+            android:name=".view.k"
             android:label="@string/title_activity_scrolling_test"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.FAQActicity" />
-        <activity android:name=".view.AboutUsActivity" />
-        <activity android:name=".view.ContactUsActivity" />
-        <activity android:name=".view.TermsActivity"></activity>
+        <activity android:name=".view.d" />
+        <activity android:name=".view.a" />
+        <activity android:name=".view.c" />
+        <activity android:name=".view.m"></activity>
     </application>
 
 </manifest>

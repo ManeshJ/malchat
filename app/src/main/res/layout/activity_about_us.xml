@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorIcon"
-    tools:context="com.intelligentz.malchat.malchat.view.AboutUsActivity">
+    tools:context="com.intelligentz.malchat.malchat.view.a">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

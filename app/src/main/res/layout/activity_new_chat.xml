@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/chat_background"
-    tools:context="com.intelligentz.malchat.malchat.view.ChatActivity">
+    tools:context="com.intelligentz.malchat.malchat.view.b">
 
     <include
         android:id="@+id/writerecipient"

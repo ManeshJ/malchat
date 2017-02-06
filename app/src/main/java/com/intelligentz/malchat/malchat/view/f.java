@@ -1,44 +1,27 @@
 package com.intelligentz.malchat.malchat.view;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.LoaderManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v4.media.session.MediaControllerCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.telephony.SmsManager;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
@@ -48,9 +31,8 @@ import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class MainActivity extends AbstractActivity implements LoaderManager.LoaderCallbacks {
+public class f extends AbstractActivity implements LoaderManager.LoaderCallbacks {
     private RecyclerView recyclerView;
     private AccountsRecyclerAdaptor recyclerAdaptor;
     private RecyclerView.LayoutManager accountslayoutManager;
@@ -105,7 +87,7 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
         username = getIntent().getStringExtra("username");
         chatusername = getIntent().getStringExtra("chatusername");
         if (chatusername != null && !chatusername.equals("MalChat")) {
-            Intent intent = new Intent(this, ChatActivity.class);
+            Intent intent = new Intent(this, b.class);
             intent.putExtra("username",chatusername);
             startActivity(intent);
         }
@@ -189,7 +171,7 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, NewChatActivity.class);
+                Intent intent = new Intent(context, g.class);
                 startActivity(intent);
             }
         });
@@ -242,25 +224,25 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
         int id = item.getItemId();
 
         if (id == R.id.update_username) {
-            Intent intent = new Intent(this, UpdateUserNameActivity.class);
+            Intent intent = new Intent(this, o.class);
             startActivity(intent);
             return true;
         } else if(id == R.id.my_username) {
             showMyUsername();
         } else if (id == R.id.action_faq) {
-            Intent intent = new Intent(this, FAQActicity.class);
+            Intent intent = new Intent(this, d.class);
             startActivity(intent);
             return true;
         } else if (id == R.id.action_about) {
-            Intent intent = new Intent(this, AboutUsActivity.class);
+            Intent intent = new Intent(this, a.class);
             startActivity(intent);
             return true;
         } else if (id == R.id.action_contact) {
-            Intent intent = new Intent(this, ContactUsActivity.class);
+            Intent intent = new Intent(this, c.class);
             startActivity(intent);
             return true;
         } else if (id == R.id.action_terms) {
-            Intent intent = new Intent(this, TermsActivity.class);
+            Intent intent = new Intent(this, m.class);
             startActivity(intent);
             return true;
         }
@@ -271,7 +253,7 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
     protected void onNewIntent(Intent intent) {
         chatusername = intent.getStringExtra("chatusername");
         if (chatusername != null && !chatusername.equals("MalChat")) {
-            Intent newintent = new Intent(this, ChatActivity.class);
+            Intent newintent = new Intent(this, b.class);
             intent.putExtra("username",chatusername);
             startActivity(newintent);
         }

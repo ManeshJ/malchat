@@ -15,7 +15,7 @@ import android.support.annotation.Nullable;
 
 import com.intelligentz.malchat.malchat.sms.MessageReceiver;
 import com.intelligentz.malchat.malchat.sms.SmsReceiver;
-import com.intelligentz.malchat.malchat.view.MainActivity;
+import com.intelligentz.malchat.malchat.view.f;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -23,7 +23,7 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
  * Created by Lakshan on 2017-01-11.
  */
 
-public class SMSReceivingService extends Service {
+public class p extends Service {
     private SmsReceiver receiver;
     private IntentFilter ifilter;
 
@@ -93,7 +93,7 @@ public class SMSReceivingService extends Service {
                         NotificationManager notificationManager = (NotificationManager)
                                 getSystemService(NOTIFICATION_SERVICE);
 
-                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), f.class);
                         intent.putExtra("username", username);
                         intent.putExtra("chatusername", address);
                         PendingIntent pIntent = PendingIntent.getActivity(getApplicationContext(), (int) System.currentTimeMillis(), intent, 0);

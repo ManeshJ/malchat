@@ -155,7 +155,7 @@ public class MainActivity extends AbstractActivity implements LoaderManager.Load
                     startIndex = 3;
                 }
                 chatMessage = new ChatMessage(0, address, body, date);
-                if (!addressList.contains(address)) {
+                if (!addressList.contains(address.toLowerCase())) {
                     addressList.add(address);
                     StringBuilder builder = new StringBuilder();
                     for(int i = startIndex; i < substrings.length; i++) {

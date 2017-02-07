@@ -83,9 +83,9 @@ public class NewChatActivity extends AbstractActivity implements LoaderManager.L
                     body = body.substring(0, body.length()-20);
                     substrings = body.split("\\s");
                     address  = substrings[1].substring(1);
-                    if (!address.equals(username)) {
-                        continue;
-                    }
+//                    if (!address.equals(username)) {
+//                        continue;
+//                    }
                     chatMessage.setType(1);
                     StringBuilder builder = new StringBuilder();
                     for(int i = 0; i < 2; i++) {
@@ -103,9 +103,9 @@ public class NewChatActivity extends AbstractActivity implements LoaderManager.L
                 } else if (body.startsWith("Mal")) {
                     substrings = body.split(" ");
                     address  = substrings[2];
-                    if (!address.equals(username)) {
-                        continue;
-                    }
+//                    if (!address.equals(username)) {
+//                        continue;
+//                    }
                     chatMessage.setType(0);
                     StringBuilder builder = new StringBuilder();
                     for(int i = 3; i < substrings.length; i++) {

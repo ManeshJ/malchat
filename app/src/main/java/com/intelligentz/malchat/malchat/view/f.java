@@ -137,8 +137,15 @@ public class f extends AbstractActivity implements LoaderManager.LoaderCallbacks
                     startIndex = 3;
                 }
                 chatMessage = new ChatMessage(0, address, body, date);
-                if (!addressList.contains(address.toLowerCase())) {
-                    addressList.add(address);
+                boolean isContain = false;
+                for (String addressi : addressList) {
+                    if (addressi.equalsIgnoreCase(address)) {
+                        isContain = true ;
+                        break;
+                    }
+                }
+                if (!isContain) {
+                    addressList.add(address.toLowerCase());
                     StringBuilder builder = new StringBuilder();
                     for(int i = startIndex; i < substrings.length; i++) {
                         builder.append(substrings[i] + " ");

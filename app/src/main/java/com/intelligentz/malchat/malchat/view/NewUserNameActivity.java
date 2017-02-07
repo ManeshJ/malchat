@@ -151,6 +151,7 @@ public class NewUserNameActivity extends AbstractActivity {
             public void onMessage(String from, String text) {
                 String successmsg = "Congratulations! Oyage username eka thamai";
                 String alreadyMsg = "Oya daapu username eka thawa ekkenek kalinma";
+                String haveunMsg = "Hi Yaluwa, oyata username ekak denatamath thiyenawa";
                 final SweetAlertDialog.OnSweetClickListener successListener = new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sweetAlertDialog) {
@@ -181,6 +182,32 @@ public class NewUserNameActivity extends AbstractActivity {
                                 .setConfirmClickListener(successListener)
                                 .changeAlertType(SweetAlertDialog.WARNING_TYPE);
                         unregisterReceiver();
+                    } else if (text.contains(haveunMsg)) {
+                        final SweetAlertDialog.OnSweetClickListener haveunlistener = new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                SharedPreferences mPrefs = getSharedPreferences("malchat.username", Context.MODE_PRIVATE);
+                                SharedPreferences.Editor editor = mPrefs.edit();
+                                editor.putString("username",username);
+                                editor.commit();
+                                Intent intent = new Intent(context, MainActivity.class);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.putExtra("username",username);
+                                intent.putExtra("newuser",true);
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
+                                unregisterReceiver();
+                                sweetAlertDialog.dismissWithAnimation();
+                            }
+                        };
+                        String[] words = text.split("\\s");
+                        username = words[words.length-4].trim();
+                        username = username.substring(0,username.length()-1);
+                        progressDialog.setTitleText("You already have a username")
+                                .setContentText("Your username is "+ username + ".")
+                                .setConfirmText("OK")
+                                .setConfirmClickListener(haveunlistener)
+                                .changeAlertType(SweetAlertDialog.WARNING_TYPE);
                     }
 
                 }

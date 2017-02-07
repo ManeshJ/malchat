@@ -188,7 +188,7 @@ public class h extends AbstractActivity {
                                 SharedPreferences.Editor editor = mPrefs.edit();
                                 editor.putString("username",username);
                                 editor.commit();
-                                Intent intent = new Intent(context, MainActivity.class);
+                                Intent intent = new Intent(context, f.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.putExtra("username",username);
                                 intent.putExtra("newuser",true);

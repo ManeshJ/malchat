@@ -22,3 +22,6 @@
 -dontwarn com.github.siyamed.**
 -keep class com.github.siyamed.shapeimageview.**{ *; }
 -dontwarn org.xmlpull.v1.**
+-keep class cn.pedant.SweetAlert.Rotate3dAnimation {
+  public <init>(...);
+}

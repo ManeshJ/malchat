@@ -84,7 +84,7 @@ public class SplashActivity extends AbstractActivity {
         SharedPreferences mPrefs = getSharedPreferences("malchat.username", Context.MODE_PRIVATE);
         String username = mPrefs.getString("username", null);
         if (username == null) {
-            Intent intent = new Intent(this, LoginActivity.class);
+            Intent intent = new Intent(this, NewUserNameActivity.class);
             startActivity(intent);
             finish();
         } else {

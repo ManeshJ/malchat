@@ -10,50 +10,50 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/AppTheme.NoActionBar"
     tools:context="com.intelligentz.malchat.malchat.view.LoginActivity">
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:src="@drawable/flowericon"
-        android:layout_margin="10dp"
-        android:id="@+id/flower"/>
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="100dp"-->
+        <!--android:src="@drawable/flowericon"-->
+        <!--android:layout_margin="10dp"-->
+        <!--android:id="@+id/flower"/>-->
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Welcome to\nMalChat"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="45dp"
-        android:gravity="center"
-        android:layout_centerInParent="true"
-        android:id="@+id/looks"/>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/already_registered"
-        android:layout_alignParentBottom="true"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/already"
-        android:background="@drawable/curved_button_background"
-        android:textColor="@color/colorIcon"
-        />
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/curved_button_background"
-        android:text="New User"
-        android:textAllCaps="false"
-        android:textColor="@color/colorIcon"
-        android:textStyle="bold"
-        android:paddingTop="0dp"
-        android:layout_marginLeft="40dp"
-        android:layout_marginRight="40dp"
-        android:layout_marginBottom="15dp"
-        android:id="@+id/register"
-        android:layout_above="@id/already"/>
+    <!--<TextView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Welcome to\nMalChat"-->
+        <!--android:textColor="@color/colorPrimaryDark"-->
+        <!--android:textSize="45dp"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:id="@+id/looks"/>-->
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/already_registered"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:textStyle="bold"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:layout_marginLeft="40dp"-->
+        <!--android:layout_marginRight="40dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:id="@+id/already"-->
+        <!--android:background="@drawable/curved_button_background"-->
+        <!--android:textColor="@color/colorIcon"-->
+        <!--/>-->
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/curved_button_background"-->
+        <!--android:text="New User"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:textColor="@color/colorIcon"-->
+        <!--android:textStyle="bold"-->
+        <!--android:paddingTop="0dp"-->
+        <!--android:layout_marginLeft="40dp"-->
+        <!--android:layout_marginRight="40dp"-->
+        <!--android:layout_marginBottom="15dp"-->
+        <!--android:id="@+id/register"-->
+        <!--android:layout_above="@id/already"/>-->
 
 
 

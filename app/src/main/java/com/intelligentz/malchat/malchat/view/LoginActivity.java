@@ -9,6 +9,7 @@ import android.content.IntentFilter;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,6 +24,8 @@ import com.intelligentz.malchat.malchat.model.Contact;
 import com.intelligentz.malchat.malchat.sms.MessageReceiver;
 import com.intelligentz.malchat.malchat.sms.SmsReceiver;
 import com.nineoldandroids.animation.Animator;
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.ViewHolder;
 
 import org.w3c.dom.Text;
 
@@ -35,33 +38,64 @@ public class LoginActivity extends AbstractActivity {
     private Button register;
     private SmsReceiver receiver;
     private Context context;
+    private DialogPlus funDialog;
     private SweetAlertDialog progressDialog;
     private BroadcastReceiver broadcastReceiver;
+    private View fun_message_view;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         context = this;
-        hiTxt = (TextView) findViewById(R.id.looks);
-        flower = (ImageView) findViewById(R.id.flower);
-        already = (Button) findViewById(R.id.already);
-        already.setOnClickListener(new View.OnClickListener() {
+//        hiTxt = (TextView) findViewById(R.id.looks);
+//        flower = (ImageView) findViewById(R.id.flower);
+//        already = (Button) findViewById(R.id.already);
+//        already.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, UserNameChoosingActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+//        register = (Button) findViewById(R.id.register);
+//        register.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(context, RegisterActivity.class);
+//                startActivity(intent);
+//            }
+//        });
+
+        showNewUserMessage();
+        //animate();
+    }
+
+    private void showNewUserMessage() {
+        funDialog = DialogPlus.newDialog(this)
+                .setContentHolder(new ViewHolder(R.layout.termsandconditions_dialog))
+                .setCancelable(false)
+                //.setContentBackgroundResource(R.drawable.fun_message_fragment_background)
+                .setExpanded(false)
+                .setGravity(Gravity.CENTER)
+                .create();
+        fun_message_view = funDialog.getHolderView();
+        Button regbtn = (Button) fun_message_view.findViewById(R.id.regbtn);
+        Button cancelbtn = (Button) fun_message_view.findViewById(R.id.cancelBtn);
+        cancelbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, UserNameChoosingActivity.class);
-                startActivity(intent);
+                funDialog.dismiss();
+                finish();
             }
         });
-        register = (Button) findViewById(R.id.register);
-        register.setOnClickListener(new View.OnClickListener() {
+        regbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, RegisterActivity.class);
-                startActivity(intent);
+                funDialog.dismiss();
             }
         });
-        animate();
+        funDialog.show();
     }
     private void animate(){
         int duration = 2000;

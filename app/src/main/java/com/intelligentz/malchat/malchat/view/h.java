@@ -27,7 +27,7 @@ import com.orhanobut.dialogplus.ViewHolder;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class NewUserNameActivity extends AbstractActivity {
+public class h extends AbstractActivity {
     private Button saveBtn;
     private Button cancelBtn;
     private SmsReceiver receiver;
@@ -207,7 +207,7 @@ public class NewUserNameActivity extends AbstractActivity {
                         SharedPreferences.Editor editor = mPrefs.edit();
                         editor.putString("username",username);
                         editor.commit();
-                        Intent intent = new Intent(context, MainActivity.class);
+                        Intent intent = new Intent(context, f.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("username",username);
                         intent.putExtra("newuser",true);
@@ -233,7 +233,7 @@ public class NewUserNameActivity extends AbstractActivity {
                                 SharedPreferences.Editor editor = mPrefs.edit();
                                 editor.putString("username",username);
                                 editor.commit();
-                                Intent intent = new Intent(context, MainActivity.class);
+                                Intent intent = new Intent(context, f.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.putExtra("username",username);
                                 intent.putExtra("newuser",true);
@@ -367,7 +367,7 @@ public class NewUserNameActivity extends AbstractActivity {
                     }
                     unregisterReceiver();
                 } else if (from.equals("ideamart") && text.contains(alreadyMsg)){
-                    Intent intent = new Intent(context, UserNameChoosingActivity.class);
+                    Intent intent = new Intent(context, n.class);
                     startActivity(intent);
                     unregisterReceiver();
                     finish();

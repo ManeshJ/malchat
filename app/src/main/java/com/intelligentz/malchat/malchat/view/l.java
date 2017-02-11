@@ -18,9 +18,9 @@ import android.widget.ImageView;
 
 import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
-import com.intelligentz.malchat.malchat.SMSReceivingService;
+import com.intelligentz.malchat.malchat.p;
 
-public class SplashActivity extends AbstractActivity {
+public class l extends AbstractActivity {
     final int REQUEST_CODE_ASK_PERMISSIONS = 123;
     private ImageView spinner;
     long startTime;
@@ -80,22 +80,22 @@ public class SplashActivity extends AbstractActivity {
     }
 
     private void goToNextActivity() {
-        startService(new Intent(this, SMSReceivingService.class));
+        startService(new Intent(this, p.class));
         SharedPreferences mPrefs = getSharedPreferences("malchat.username", Context.MODE_PRIVATE);
         String username = mPrefs.getString("username", null);
         if (username == null) {
-            Intent intent = new Intent(this, NewUserNameActivity.class);
+            Intent intent = new Intent(this, h.class);
             startActivity(intent);
             finish();
         } else {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, f.class);
             intent.putExtra("username",username);
             startActivity(intent);
             finish();
         }
     }
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(SplashActivity.this)
+        new AlertDialog.Builder(l.this)
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)
                 .setNegativeButton("Cancel", null)

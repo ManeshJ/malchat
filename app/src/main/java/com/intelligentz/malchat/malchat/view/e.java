@@ -31,7 +31,7 @@ import org.w3c.dom.Text;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-public class LoginActivity extends AbstractActivity {
+public class e extends AbstractActivity {
     private TextView hiTxt;
     private ImageView flower;
     private Button already;

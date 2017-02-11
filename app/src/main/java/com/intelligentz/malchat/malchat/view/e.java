@@ -1,33 +1,21 @@
 package com.intelligentz.malchat.malchat.view;
 
-import android.app.Activity;
-import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.telephony.SmsManager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
 import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
-import com.intelligentz.malchat.malchat.model.Contact;
-import com.intelligentz.malchat.malchat.sms.MessageReceiver;
 import com.intelligentz.malchat.malchat.sms.SmsReceiver;
-import com.nineoldandroids.animation.Animator;
 import com.orhanobut.dialogplus.DialogPlus;
 import com.orhanobut.dialogplus.ViewHolder;
-
-import org.w3c.dom.Text;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 

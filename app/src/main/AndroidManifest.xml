@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     ;
     <application
-        android:name=".ReceiverApplication"
+        android:name="com.intelligentz.malchat.malchat.ReceiverApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,10 +20,10 @@
         android:windowSoftInputMode="adjustResize"
         tools:overrideLibrary="com.luolc.emojirain"
         tools:replace="android:icon">
-        <service android:name=".p" />
+        <service android:name="com.intelligentz.malchat.malchat.p" />
 
         <activity
-            android:name=".view.l"
+            android:name="com.intelligentz.malchat.malchat.view.l"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,36 +32,36 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.f"
+            android:name="com.intelligentz.malchat.malchat.view.f"
             android:label="@string/title_activity_main"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.b" />
-        <activity android:name=".view.g" />
+        <activity android:name="com.intelligentz.malchat.malchat.view.b" />
+        <activity android:name="com.intelligentz.malchat.malchat.view.g" />
         <activity
-            android:name=".view.e"
+            android:name="com.intelligentz.malchat.malchat.view.e"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.n"
+            android:name="com.intelligentz.malchat.malchat.view.n"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.h"
+            android:name="com.intelligentz.malchat.malchat.view.h"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.j"
+            android:name="com.intelligentz.malchat.malchat.view.j"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.o" />
+        <activity android:name="com.intelligentz.malchat.malchat.view.o" />
         <activity
-            android:name=".view.i"
+            android:name="com.intelligentz.malchat.malchat.view.i"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".view.k"
+            android:name="com.intelligentz.malchat.malchat.view.k"
             android:label="@string/title_activity_scrolling_test"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".view.d" />
-        <activity android:name=".view.a" />
-        <activity android:name=".view.c" />
-        <activity android:name=".view.m"></activity>
+        <activity android:name="com.intelligentz.malchat.malchat.view.d" />
+        <activity android:name="com.intelligentz.malchat.malchat.view.a" />
+        <activity android:name="com.intelligentz.malchat.malchat.view.c" />
+        <activity android:name="com.intelligentz.malchat.malchat.view.m"></activity>
     </application>
 
 </manifest>

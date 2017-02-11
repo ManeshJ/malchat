@@ -1,34 +1,24 @@
 package com.intelligentz.malchat.malchat.view;
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
-import android.os.Build;
-import android.provider.Settings;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
-import android.view.Gravity;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
-import com.intelligentz.malchat.malchat.adaptor.AccountsRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.adaptor.ChatRecyclerAdaptor;
 import com.intelligentz.malchat.malchat.model.ChatMessage;
 

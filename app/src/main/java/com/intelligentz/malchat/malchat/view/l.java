@@ -7,8 +7,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -16,9 +18,9 @@ import android.widget.ImageView;
 
 import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
-import com.intelligentz.malchat.malchat.p;
+import com.intelligentz.malchat.malchat.SMSReceivingService;
 
-public class l extends AbstractActivity {
+public class SplashActivity extends AbstractActivity {
     final int REQUEST_CODE_ASK_PERMISSIONS = 123;
     private ImageView spinner;
     long startTime;
@@ -78,22 +80,22 @@ public class l extends AbstractActivity {
     }
 
     private void goToNextActivity() {
-        startService(new Intent(this, p.class));
+        startService(new Intent(this, SMSReceivingService.class));
         SharedPreferences mPrefs = getSharedPreferences("malchat.username", Context.MODE_PRIVATE);
         String username = mPrefs.getString("username", null);
         if (username == null) {
-            Intent intent = new Intent(this, e.class);
+            Intent intent = new Intent(this, NewUserNameActivity.class);
             startActivity(intent);
             finish();
         } else {
-            Intent intent = new Intent(this, f.class);
+            Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("username",username);
             startActivity(intent);
             finish();
         }
     }
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
-        new AlertDialog.Builder(l.this)
+        new AlertDialog.Builder(SplashActivity.this)
                 .setMessage(message)
                 .setPositiveButton("OK", okListener)
                 .setNegativeButton("Cancel", null)

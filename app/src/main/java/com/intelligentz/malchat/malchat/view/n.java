@@ -11,7 +11,7 @@ import com.intelligentz.malchat.malchat.AbstractActivity;
 import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.model.Contact;
 
-public class UserNameChoosingActivity extends AbstractActivity {
+public class n extends AbstractActivity {
     private Button noUserNAmeBtn;
     private Button alreadyUserNameBtn;
     private Context context;
@@ -25,7 +25,7 @@ public class UserNameChoosingActivity extends AbstractActivity {
         noUserNAmeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, NewUserNameActivity.class);
+                Intent intent = new Intent(context, h.class);
                 intent.putExtra("status",1);
                 startActivity(intent);
             }
@@ -33,7 +33,7 @@ public class UserNameChoosingActivity extends AbstractActivity {
         alreadyUserNameBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, SaveExistingUserName.class);
+                Intent intent = new Intent(context, j.class);
                 startActivity(intent);
             }
         });

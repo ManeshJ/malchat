@@ -26,6 +26,7 @@ public class UserNameChoosingActivity extends AbstractActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, NewUserNameActivity.class);
+                intent.putExtra("status",1);
                 startActivity(intent);
             }
         });

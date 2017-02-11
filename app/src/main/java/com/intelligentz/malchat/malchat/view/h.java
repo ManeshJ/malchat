@@ -29,6 +29,7 @@ public class h extends AbstractActivity {
     private Button saveBtn;
     private Button cancelBtn;
     private SmsReceiver receiver;
+    int status;
     String username;
     private SweetAlertDialog progressDialog;
     private Context context;
@@ -42,6 +43,7 @@ public class h extends AbstractActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_user_name);
         context = this;
+        status = getIntent().getIntExtra("status", 0);
         saveBtn = (Button) findViewById(R.id.saveBtn);
         cancelBtn = (Button) findViewById(R.id.cancelBtn);
         usernameTxt = (EditText) findViewById(R.id.usernameTxt);
@@ -57,7 +59,9 @@ public class h extends AbstractActivity {
                 finish();
             }
         });
-        showNewUserMessage();
+        if (status == 0) {
+            showNewUserMessage();
+        }
     }
 
     private void showNewUserMessage() {

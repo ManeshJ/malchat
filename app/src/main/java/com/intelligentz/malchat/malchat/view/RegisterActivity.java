@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
                         sweetAlertDialog.dismissWithAnimation();
                     }
                 };
-                if (from.equals("ideamart") && text.contains(successmsg)){
+                if (from.equals("Ideamart") && text.contains(successmsg)){
                     Intent intent = new Intent(context, NewUserNameActivity.class);
                     startActivity(intent);
                     if (progressDialog.isShowing()) {
@@ -93,7 +93,7 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     unregisterReceiver();
                     finish();
-                } else if (from.equals("ideamart") && text.contains(alreadyMsg)){
+                } else if (from.equals("Ideamart") && text.contains(alreadyMsg)){
                     progressDialog.setTitleText("Failed!")
                             .setContentText("Oops! You are already registered to MalChat")
                             .setConfirmText("OK")

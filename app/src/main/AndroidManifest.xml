@@ -9,7 +9,9 @@
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    ;
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+
     <application
         android:name=".ReceiverApplication"
         android:allowBackup="true"
@@ -61,7 +63,9 @@
         <activity android:name=".view.FAQActicity" />
         <activity android:name=".view.AboutUsActivity" />
         <activity android:name=".view.ContactUsActivity" />
-        <activity android:name=".view.TermsActivity"></activity>
+        <activity android:name=".view.TermsActivity" />
+        <activity android:name=".view.RegisterPromptActivity"
+            android:theme="@style/AppTheme.NoActionBar" ></activity>
     </application>
 
 </manifest>

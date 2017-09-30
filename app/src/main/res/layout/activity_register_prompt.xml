@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:theme="@style/AppTheme.NoActionBar"
+    tools:context="com.intelligentz.malchat.malchat.view.RegisterPromptActivity">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:src="@drawable/flowericon"
+        android:layout_margin="10dp"
+        android:id="@+id/flower"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="You need to register with our service in order to continue."
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="25dp"
+        android:gravity="center"
+        android:layout_centerInParent="true"
+        android:id="@+id/looks"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:layout_alignParentBottom="true"
+        android:textStyle="bold"
+        android:textAllCaps="false"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/cancel"
+        android:background="@drawable/curved_button_background"
+        android:textColor="@color/colorIcon"
+        />
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/curved_button_background"
+        android:text="Register"
+        android:textAllCaps="false"
+        android:textColor="@color/colorIcon"
+        android:textStyle="bold"
+        android:paddingTop="0dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginBottom="15dp"
+        android:id="@+id/register"
+        android:layout_above="@id/cancel"/>
+
+
+
+
+</RelativeLayout>
+

@@ -12,6 +12,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
@@ -52,8 +53,11 @@ public class SplashActivity extends AbstractActivity {
     }
 
     private void requestPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.CALL_PHONE}, REQUEST_CODE_ASK_PERMISSIONS);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE , Manifest.permission.READ_PHONE_NUMBERS}, REQUEST_CODE_ASK_PERMISSIONS);
+        }
+        else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE_ASK_PERMISSIONS);
         }else {
 //            while (System.currentTimeMillis() - startTime < 3000) {
 //
@@ -83,15 +87,21 @@ public class SplashActivity extends AbstractActivity {
         startService(new Intent(this, SMSReceivingService.class));
         SharedPreferences mPrefs = getSharedPreferences("malchat.username", Context.MODE_PRIVATE);
         String username = mPrefs.getString("username", null);
-        if (username == null) {
-            Intent intent = new Intent(this, NewUserNameActivity.class);
-            startActivity(intent);
-            finish();
+        TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        String operator = tm.getNetworkOperator();
+        if (!operator.equals("41302") && !operator.equals("41308")) {
+            showMessageOKCancel("This service is for Dialog and Hutch users only", null);
         } else {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra("username",username);
-            startActivity(intent);
-            finish();
+            if (username == null) {
+                Intent intent = new Intent(this, RegisterPromptActivity.class);
+                startActivity(intent);
+                finish();
+            } else {
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.putExtra("username", username);
+                startActivity(intent);
+                finish();
+            }
         }
     }
     private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {

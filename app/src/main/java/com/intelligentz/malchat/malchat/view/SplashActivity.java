@@ -89,8 +89,8 @@ public class SplashActivity extends AbstractActivity {
         String username = mPrefs.getString("username", null);
         TelephonyManager tm = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
         String operator = tm.getNetworkOperator();
-        if (!operator.equals("41302") && !operator.equals("41308")) {
-            showMessageOKCancel("This service is for Dialog and Hutch users only", null);
+        if (!operator.equals("41302") && !operator.equals("41308") && !operator.equals("41305")) {
+            showMessageOKCancel("This service is for Dialog, Hutch and Airtel users only", null);
         } else {
             if (username == null) {
                 Intent intent = new Intent(this, RegisterPromptActivity.class);

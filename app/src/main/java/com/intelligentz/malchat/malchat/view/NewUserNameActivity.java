@@ -360,7 +360,7 @@ public class NewUserNameActivity extends AbstractActivity {
                         sweetAlertDialog.dismissWithAnimation();
                     }
                 };
-                if (from.equals("ideamart") && text.contains(successmsg)){
+                if (from.equals("Ideamart") && text.contains(successmsg)){
 
                     if (progressDialog.isShowing()) {
                         progressDialog.setTitleText("Success!")
@@ -370,7 +370,7 @@ public class NewUserNameActivity extends AbstractActivity {
                                 .changeAlertType(SweetAlertDialog.SUCCESS_TYPE);
                     }
                     unregisterReceiver();
-                } else if (from.equals("ideamart") && text.contains(alreadyMsg)){
+                } else if (from.equals("Ideamart") && text.contains(alreadyMsg)){
                     Intent intent = new Intent(context, UserNameChoosingActivity.class);
                     startActivity(intent);
                     unregisterReceiver();

@@ -120,7 +120,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Every registered user will be charged Rs.3 and governmental taxes daily in Sri Lanka."
+                    android:text="Every registered user will be charged Rs.4 and governmental taxes daily in Sri Lanka."
                     android:textSize="15sp"/>
             </LinearLayout>
             <LinearLayout

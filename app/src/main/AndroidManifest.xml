@@ -52,6 +52,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.SaveExistingUserName"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.UpdateUserNameActivity" />
         <activity
@@ -69,7 +70,8 @@
             android:name=".view.RegisterPromptActivity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.InvitingActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"/>
         <activity
             android:name=".view.InviteSelectionActivity"
             android:theme="@style/AppTheme.NoActionBar" />

@@ -29,13 +29,15 @@ public class ContactRecyclerAdaptor extends RecyclerView.Adapter<ContactRecycler
     private Context context;
     private InvitingActivity invitingActivity;
     private ArrayList<Contact> contactList;
-    private ArrayList<Contact> selectedContactList;
+    private static ArrayList<Contact> selectedContactList;
 
     public ContactRecyclerAdaptor(Context context, ArrayList<Contact> contactList){
         this.context = context;
         this.invitingActivity = (InvitingActivity) context;
         this.contactList = contactList;
-        this.selectedContactList = new ArrayList<Contact>();
+        if (this.selectedContactList == null) {
+            this.selectedContactList = new ArrayList<Contact>();
+        }
     }
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -49,6 +51,11 @@ public class ContactRecyclerAdaptor extends RecyclerView.Adapter<ContactRecycler
         Contact contact = contactList.get(position);
         holder.contactNameTxt.setText(contact.getUsername());
         holder.phone_number_txt.setText(contact.getMobile_number());
+        if (isInList(contactList.get(position)) != null){
+            holder.checkBox.setChecked(true);
+        } else {
+            holder.checkBox.setChecked(false);
+        }
     }
 
     @Override
@@ -78,9 +85,10 @@ public class ContactRecyclerAdaptor extends RecyclerView.Adapter<ContactRecycler
         public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
             int pos = getAdapterPosition();
             if (b) {
+                if (isInList(contactList.get(pos)) == null)
                 selectedContactList.add(contactList.get(pos));
             } else {
-                selectedContactList.remove(contactList.get(pos));
+                selectedContactList.remove(isInList(contactList.get(pos)));
             }
             invitingActivity.updateSelectedNumber(selectedContactList.size());
         }
@@ -88,5 +96,16 @@ public class ContactRecyclerAdaptor extends RecyclerView.Adapter<ContactRecycler
 
     public ArrayList<Contact> getSelectedContactList() {
         return selectedContactList;
+    }
+
+    private Contact isInList(Contact contact){
+        Contact ith;
+        for (int i = 0; i < selectedContactList.size(); i++) {
+            ith = selectedContactList.get(i);
+            if (ith.getUsername().equals(contact.getUsername()) && ith.getMobile_number().equals(contact.getMobile_number())){
+                return ith;
+            }
+        }
+        return null;
     }
 }

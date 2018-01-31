@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.Cursor;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +15,13 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.telephony.SmsManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.intelligentz.malchat.malchat.R;
@@ -27,19 +33,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class InvitingActivity extends AppCompatActivity {
 
-    private static final int REQUEST_CODE_PICK_CONTACT = 123;
-    private static final int MAX_PICK_CONTACT = 10;
+    private int previousLength = 0;
 
     private Context context;
     private String username;
     private int sentCount = 0;
     private ArrayList<Contact> contactList;
+    private ArrayList<Contact> searchcontactList;
     private ArrayList<Contact> selectedContactList;
     private RecyclerView recyclerView;
     private ContactRecyclerAdaptor recyclerAdaptor;
@@ -48,7 +55,7 @@ public class InvitingActivity extends AppCompatActivity {
     private TextView selected_number_lbl;
     private SweetAlertDialog progressDialog;
     private BroadcastReceiver broadcastReceiver;
-
+    private EditText txt_search;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +64,7 @@ public class InvitingActivity extends AppCompatActivity {
         this.username = getIntent().getStringExtra("username");
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
         invite_btn = (MaterialFancyButton) findViewById(R.id.send_btn);
+        txt_search = (EditText) findViewById(R.id.txt_search);
         selected_number_lbl = (TextView) findViewById(R.id.selectednumber_lbl);
         new RetrieveContacts().execute();
         invite_btn.setOnClickListener(new View.OnClickListener() {
@@ -66,11 +74,27 @@ public class InvitingActivity extends AppCompatActivity {
                 sendSMS();
             }
         });
+        txt_search.getViewTreeObserver()
+                .addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        DisplayMetrics dm = new DisplayMetrics();
+                        getWindowManager().getDefaultDisplay().getMetrics(dm);
+                        float density = dm.density;
+                        Drawable img = context.getResources().getDrawable(
+                                R.drawable.icon_search);
+                        img.setBounds(0, 0, Math.round(18 * density), Math.round(18 * density));
+
+                        txt_search.setCompoundDrawables(img, null, null, null);
+                    }
+                });
+
     }
 
     private void getContactList(){
         Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,null, null, null, ContactsContract.Contacts.DISPLAY_NAME+" ASC");
         contactList = new ArrayList<>();
+        searchcontactList = new ArrayList<>();
         while (cursor.moveToNext()) {
             String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
             String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
@@ -90,6 +114,7 @@ public class InvitingActivity extends AppCompatActivity {
                 phones.close();
             }
         }
+        searchcontactList.addAll(contactList);
     }
     private void loadRecyclerView(){
         contactlayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -97,6 +122,7 @@ public class InvitingActivity extends AppCompatActivity {
         recyclerAdaptor = new ContactRecyclerAdaptor(this, contactList);
         recyclerView.setAdapter(recyclerAdaptor);
         recyclerView.setNestedScrollingEnabled(false);
+
     }
 
 //    private void openContactList(){
@@ -203,14 +229,12 @@ public class InvitingActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         };
-        if (progressDialog == null) {
-            progressDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
-            progressDialog.setTitleText("Sending Invitations...");
-            progressDialog.setCancelable(false);
-            progressDialog.setContentText("Sent " + String.valueOf(sentCount) + "/" + String.valueOf(totalinvites));
-            progressDialog.getProgressHelper().setRimColor(R.color.colorPrimary);
-            progressDialog.show();
-        }
+        progressDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
+        progressDialog.setTitleText("Sending Invitations...");
+        progressDialog.setCancelable(false);
+        progressDialog.setContentText("Sent " + String.valueOf(sentCount) + "/" + String.valueOf(totalinvites));
+        progressDialog.getProgressHelper().setRimColor(R.color.colorPrimary);
+        progressDialog.show();
         final String SENT_ACTION = "com.intelligentz.malchat.invsent"+String.valueOf(sentCount);
         final PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent(SENT_ACTION), 0);
         broadcastReceiver  = new BroadcastReceiver()
@@ -268,11 +292,22 @@ public class InvitingActivity extends AppCompatActivity {
         };
         registerReceiver(broadcastReceiver, new IntentFilter(SENT_ACTION));
         String msg = "Data නැතුව chat/message කරමුද? මම නම් දාගත්තා. ඔයත් දාගන්න. පහල Link එකෙන් දැන්ම Mal Chat Download කරගන්න. www.bit.ly/MalChat ";
+
         String number = selectedContactList.get(sentCount).getMobile_number();
         try {
             SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage(number, null, msg, sentPI, null);
+            ArrayList<String> msgList = smsManager.divideMessage(msg);
+            ArrayList<PendingIntent> sentPIList = new ArrayList<>();
+            sentPIList.add(sentPI);
+            smsManager.sendMultipartTextMessage(number, null, msgList, sentPIList, null);
         } catch (Exception ex) {
+            if (progressDialog.isShowing()) {
+                progressDialog.setTitleText("Failed!")
+                        .setContentText("There was an error sending.")
+                        .setConfirmText("OK")
+                        .setConfirmClickListener(successListener)
+                        .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+            }
             Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
                     Toast.LENGTH_LONG).show();
             ex.printStackTrace();
@@ -307,6 +342,51 @@ public class InvitingActivity extends AppCompatActivity {
                 progressDialog.dismissWithAnimation();
             }
             loadRecyclerView();
+            configureSearchText();
         }
+    }
+
+    private void configureSearchText() {
+        txt_search = (EditText) findViewById(R.id.txt_search);
+        txt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                charSequence = charSequence.toString().toLowerCase();
+                if (charSequence.length() > 0) {
+                    if (charSequence.length() > previousLength) {
+                        previousLength++;
+                        for (Contact contact : new ArrayList<>(searchcontactList)) {
+                            if (!contact.getUsername().toLowerCase().contains(charSequence)) {
+                                searchcontactList.remove(contact);
+                            }
+                        }
+                    } else {
+                        if (previousLength != 0)
+                            previousLength--;
+                        searchcontactList = new ArrayList<Contact>();
+                        for (Contact contact : contactList) {
+                            if (contact.getUsername().toLowerCase().contains(charSequence)) {
+                                searchcontactList.add(contact);
+                            }
+                        }
+                    }
+                } else {
+                    searchcontactList = new ArrayList<Contact>();
+                    searchcontactList.addAll(contactList);
+                }
+                recyclerAdaptor = new ContactRecyclerAdaptor(context,searchcontactList);
+                recyclerView.setAdapter(recyclerAdaptor);
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
     }
 }

@@ -407,7 +407,7 @@ public class NewUserNameActivity extends AbstractActivity {
                     unregisterReceiver();
                 }
             }
-        }, 15000);
+        }, 30000);
     }
 }
 

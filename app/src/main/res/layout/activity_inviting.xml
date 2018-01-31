@@ -33,9 +33,39 @@
         android:background="@color/colorAccent">
 
     </LinearLayout>
+    <RelativeLayout
+        android:id="@+id/search_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_below="@id/toplabel">
+
+        <EditText
+            android:id="@+id/txt_search"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/search_bar_background"
+            android:drawablePadding="10dp"
+            android:hint="Search"
+            android:paddingBottom="5dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="5dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textColorHint="@color/colorPrimaryDark"
+            android:textSize="12sp"
+            android:layout_centerHorizontal="true" />
+
+        <LinearLayout
+            android:layout_width="0px"
+            android:layout_height="0px"
+            android:focusable="true"
+            android:focusableInTouchMode="true" />
+    </RelativeLayout>
     <TextView
         android:id="@+id/selectednumber_lbl"
-        android:layout_below="@+id/toplabel"
+        android:layout_below="@id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="None Selected"
@@ -67,8 +97,13 @@
         fancy:mfb_iconPosition="right"
         fancy:mfb_iconPaddingLeft="10dp"
         fancy:mfb_textFont="fontawesome.ttf"
-        fancy:mfb_text="Send Invitation"
+        fancy:mfb_text="Send Invitations"
         fancy:mfb_defaultColor="@color/colorPrimary"
+        fancy:mfb_radius="13dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:layout_marginEnd="10dp"
         android:layout_marginStart="5dp"
         android:layout_marginTop="15dp"

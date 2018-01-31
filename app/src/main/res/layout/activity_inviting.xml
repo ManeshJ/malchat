@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme.NoActionBar"
+    android:background="@android:color/white"
+    tools:context="com.intelligentz.malchat.malchat.view.InvitingActivity">
+    <TextView
+        android:id="@+id/toplabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:textColor="@color/colorPrimary"
+        android:textStyle="bold"
+        android:text="Select your contacts to Invite..."
+        android:textSize="20sp"
+        android:background="@android:color/white"
+        />
+    <LinearLayout
+        android:id="@+id/line1"
+        android:layout_below="@id/toplabel"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@color/colorAccent">
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/selectednumber_lbl"
+        android:layout_below="@+id/toplabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="None Selected"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold"
+        android:textColor="@color/colorPrimary"/>
+    <!--<Button-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="Send Invitation"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--android:textStyle="bold"-->
+        <!--android:textAllCaps="false"-->
+        <!--android:layout_marginLeft="40dp"-->
+        <!--android:layout_marginRight="40dp"-->
+        <!--android:layout_marginBottom="10dp"-->
+        <!--android:id="@+id/cancel"-->
+        <!--android:background="@drawable/curved_button_background"-->
+        <!--android:textColor="@color/colorIcon"-->
+        <!--/>-->
+    <com.rilixtech.materialfancybutton.MaterialFancyButton
+        android:id="@+id/send_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fancy:mfb_icon="@string/fawi_paper_plane_o"
+        fancy:mfb_iconPosition="right"
+        fancy:mfb_iconPaddingLeft="10dp"
+        fancy:mfb_textFont="fontawesome.ttf"
+        fancy:mfb_text="Send Invitation"
+        fancy:mfb_defaultColor="@color/colorPrimary"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_below="@id/selectednumber_lbl"
+        android:layout_above="@id/send_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+</RelativeLayout>

@@ -1,13 +1,19 @@
 package com.intelligentz.malchat.malchat.adaptor;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.model.ChatMessage;
 import com.intelligentz.malchat.malchat.view.ChatActivity;
@@ -25,10 +31,38 @@ public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewH
     ArrayList<ChatMessage> messageList = null;
     Context context = null;
     Activity activity;
-    public ChatRecyclerAdaptor(ArrayList<ChatMessage> messageList, Context context, Activity activity) {
+    private View.OnLongClickListener longClickListener;
+    public ChatRecyclerAdaptor(ArrayList<ChatMessage> messageList, final Context context, Activity activity) {
         this.context = context;
         this.messageList = messageList;
         this.activity = activity;
+        this.longClickListener = new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(final View view) {
+                if (view.getId() == R.id.chatText){
+                    PopupMenu popup = new PopupMenu(view.getContext(), view);
+                    //Inflating the Popup using xml file
+                    popup.getMenuInflater()
+                            .inflate(R.menu.copymenu, popup.getMenu());
+
+                    //registering popup with OnMenuItemClickListener
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            if (item.getItemId() == R.id.copy) {
+                                TextView textView = (TextView) view;
+                                CharSequence text = textView.getText();
+                                ClipboardManager clipboard = (ClipboardManager) view.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                                ClipData clip = ClipData.newPlainText(text, text);
+                                clipboard.setPrimaryClip(clip);
+                            }
+                            return true;
+                        }
+                    });
+                    popup.show();
+                }
+                return false;
+            }
+        };
     }
 
     @Override
@@ -87,7 +121,6 @@ public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewH
 
     }
 
-
     public class ReceivedRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView messageTxt;
         TextView dateTxt;
@@ -99,6 +132,7 @@ public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewH
             this.messageList = messageList;
             messageTxt = (TextView) itemView.findViewById(R.id.chatText);
             dateTxt = (TextView) itemView.findViewById(R.id.date_txt);
+            messageTxt.setOnLongClickListener(longClickListener);
         }
 
         @Override
@@ -108,7 +142,7 @@ public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewH
         }
     }
 
-    public class SentRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class SentRecyclerViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView messageTxt;
         TextView dateTxt;
         ArrayList<ChatMessage> messageList = null;
@@ -119,6 +153,7 @@ public class ChatRecyclerAdaptor extends RecyclerView.Adapter<RecyclerView.ViewH
             this.messageList = messageList;
             messageTxt = (TextView) itemView.findViewById(R.id.chatText);
             dateTxt = (TextView) itemView.findViewById(R.id.date_txt);
+            messageTxt.setOnLongClickListener(longClickListener);
         }
 
         @Override

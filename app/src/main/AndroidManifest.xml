@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".ReceiverApplication"
@@ -64,8 +65,14 @@
         <activity android:name=".view.AboutUsActivity" />
         <activity android:name=".view.ContactUsActivity" />
         <activity android:name=".view.TermsActivity" />
-        <activity android:name=".view.RegisterPromptActivity"
-            android:theme="@style/AppTheme.NoActionBar" ></activity>
+        <activity
+            android:name=".view.RegisterPromptActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".view.InvitingActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".view.InviteSelectionActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -40,6 +41,7 @@ public class NewUserNameActivity extends AbstractActivity {
     private DialogPlus funDialog;
     private View fun_message_view;
     private CheckBox checkBox;
+    boolean isRegistrationReceived = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -211,10 +213,9 @@ public class NewUserNameActivity extends AbstractActivity {
                         SharedPreferences.Editor editor = mPrefs.edit();
                         editor.putString("username",username);
                         editor.commit();
-                        Intent intent = new Intent(context, MainActivity.class);
+                        Intent intent = new Intent(context, InviteSelectionActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("username",username);
-                        intent.putExtra("newuser",true);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                         unregisterReceiver();
@@ -237,10 +238,9 @@ public class NewUserNameActivity extends AbstractActivity {
                                 SharedPreferences.Editor editor = mPrefs.edit();
                                 editor.putString("username",username);
                                 editor.commit();
-                                Intent intent = new Intent(context, MainActivity.class);
+                                Intent intent = new Intent(context, InviteSelectionActivity.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                                 intent.putExtra("username",username);
-                                intent.putExtra("newuser",true);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 unregisterReceiver();
@@ -340,6 +340,9 @@ public class NewUserNameActivity extends AbstractActivity {
     }
 
     private void registerRegisterReceiver() {
+        isRegistrationReceived = false;
+        startTimeout();
+
         IntentFilter ifilter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
         // Use number higher than 999 if you want to be able to stop processing and not to put
         // auth messages into the inbox.
@@ -361,7 +364,7 @@ public class NewUserNameActivity extends AbstractActivity {
                     }
                 };
                 if (from.equals("Ideamart") && text.contains(successmsg)){
-
+                    isRegistrationReceived = true;
                     if (progressDialog.isShowing()) {
                         progressDialog.setTitleText("Success!")
                                 .setContentText("You successfully registered with MalChat")
@@ -371,6 +374,7 @@ public class NewUserNameActivity extends AbstractActivity {
                     }
                     unregisterReceiver();
                 } else if (from.equals("Ideamart") && text.contains(alreadyMsg)){
+                    isRegistrationReceived = true;
                     Intent intent = new Intent(context, UserNameChoosingActivity.class);
                     startActivity(intent);
                     unregisterReceiver();
@@ -379,4 +383,32 @@ public class NewUserNameActivity extends AbstractActivity {
             }
         });
     }
+
+    private void startTimeout(){
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (!isRegistrationReceived){
+                    final SweetAlertDialog.OnSweetClickListener successListener = new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            sweetAlertDialog.dismissWithAnimation();
+                            finish();
+                        }
+                    };
+                    if (progressDialog.isShowing()) {
+                        progressDialog.setTitleText("Oops!")
+                                .setContentText("Seems you dont have enough credits to register. Please reload and try again!")
+                                .setConfirmText("OK")
+                                .setConfirmClickListener(successListener)
+                                .changeAlertType(SweetAlertDialog.ERROR_TYPE);
+                    }
+                    unregisterReceiver();
+                }
+            }
+        }, 15000);
+    }
 }
+
+

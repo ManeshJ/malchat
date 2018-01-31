@@ -54,10 +54,10 @@ public class SplashActivity extends AbstractActivity {
 
     private void requestPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE , Manifest.permission.READ_PHONE_NUMBERS}, REQUEST_CODE_ASK_PERMISSIONS);
+            requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE , Manifest.permission.READ_PHONE_NUMBERS, Manifest.permission.READ_CONTACTS}, REQUEST_CODE_ASK_PERMISSIONS);
         }
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE_ASK_PERMISSIONS);
+            requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.CALL_PHONE, Manifest.permission.READ_PHONE_STATE, Manifest.permission.READ_CONTACTS}, REQUEST_CODE_ASK_PERMISSIONS);
         }else {
 //            while (System.currentTimeMillis() - startTime < 3000) {
 //
@@ -94,6 +94,7 @@ public class SplashActivity extends AbstractActivity {
         } else {
             if (username == null) {
                 Intent intent = new Intent(this, RegisterPromptActivity.class);
+//                Intent intent = new Intent(this, InviteSelectionActivity.class);
                 startActivity(intent);
                 finish();
             } else {

@@ -49,10 +49,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.NewUserNameActivity"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".view.SaveExistingUserName"
-            android:windowSoftInputMode="adjustResize"
+            android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.UpdateUserNameActivity" />
         <activity

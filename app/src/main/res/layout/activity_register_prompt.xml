@@ -12,7 +12,7 @@
     tools:context="com.intelligentz.malchat.malchat.view.RegisterPromptActivity">
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
         android:src="@drawable/flowericon"
         android:layout_margin="10dp"
         android:id="@+id/flower"/>

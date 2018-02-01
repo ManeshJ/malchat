@@ -12,7 +12,7 @@
     tools:context="com.intelligentz.malchat.malchat.view.InviteSelectionActivity">
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="200dp"
         android:src="@drawable/flowericon"
         android:layout_margin="10dp"
         android:id="@+id/flower"/>
@@ -20,12 +20,22 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your friends might like to join with you. Invite them to MalChat."
+        android:text="Click on Invite button to invite your friends to Mal Chat."
         android:textColor="@color/colorPrimaryDark"
         android:textSize="25dp"
         android:gravity="center"
         android:layout_centerInParent="true"
         android:id="@+id/looks"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="*Standard SMS charges will be applicable by your operator."
+        android:textColor="@color/text_color"
+        android:textSize="15dp"
+        android:gravity="center"
+        android:layout_below="@id/looks"
+        android:id="@+id/charge"/>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

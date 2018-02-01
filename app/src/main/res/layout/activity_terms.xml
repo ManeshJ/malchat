@@ -85,7 +85,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Only available for Dialog and Hutch Subscribers"
+            android:text="Only available for Dialog, Airtel and Hutch Subscribers"
             android:textSize="15sp"/>
     </LinearLayout>
     <LinearLayout

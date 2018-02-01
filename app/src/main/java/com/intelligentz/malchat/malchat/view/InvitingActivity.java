@@ -291,7 +291,7 @@ public class InvitingActivity extends AppCompatActivity {
             }
         };
         registerReceiver(broadcastReceiver, new IntentFilter(SENT_ACTION));
-        String msg = "Data නැතුව chat/message කරමුද? මම නම් දාගත්තා. ඔයත් දාගන්න. පහල Link එකෙන් දැන්ම Mal Chat Download කරගන්න. www.bit.ly/MalChat ";
+        String msg = "Hey, I started using Mal Chat - Chat with No Data. Click on the link below to get the special invite www.bit.ly/MalChatLK";
 
         String number = selectedContactList.get(sentCount).getMobile_number();
         try {
@@ -323,8 +323,8 @@ public class InvitingActivity extends AppCompatActivity {
 
             super.onPreExecute();
             progressDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
-            progressDialog.setTitleText("Retrieving Contacts...");
-            progressDialog.setContentText("Please wait");
+            progressDialog.setTitleText("Loading Contacts...");
+            progressDialog.setContentText("This may take a while if the phone book is big");
             progressDialog.getProgressHelper().setRimColor(R.color.colorPrimary);
             progressDialog.show();
         }

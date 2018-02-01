@@ -3,6 +3,7 @@
     android:layout_width="match_parent" android:layout_height="60dp"
     android:gravity="center_vertical"
     android:background="@color/colorIcon"
+    android:id="@+id/contact_row_layout"
     >
     <com.github.siyamed.shapeimageview.CircularImageView
         android:layout_width="40dp"
@@ -22,7 +23,8 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"/>
+        android:layout_marginRight="15dp"
+        app:buttonTint="@android:color/black"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

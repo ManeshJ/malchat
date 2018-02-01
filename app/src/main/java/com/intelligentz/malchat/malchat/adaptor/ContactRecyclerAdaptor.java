@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.github.siyamed.shapeimageview.CircularImageView;
@@ -29,7 +30,7 @@ public class ContactRecyclerAdaptor extends RecyclerView.Adapter<ContactRecycler
     private Context context;
     private InvitingActivity invitingActivity;
     private ArrayList<Contact> contactList;
-    private static ArrayList<Contact> selectedContactList;
+    public static ArrayList<Contact> selectedContactList;
 
     public ContactRecyclerAdaptor(Context context, ArrayList<Contact> contactList){
         this.context = context;
@@ -63,13 +64,14 @@ public class ContactRecyclerAdaptor extends RecyclerView.Adapter<ContactRecycler
         return contactList.size();
     }
 
-    public class RecyclerViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener {
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener{
         CircularImageView accountImageView = null;
         TextView contactNameTxt;
         TextView phone_number_txt;
         CheckBox checkBox;
         ArrayList<Contact> contactList = null;
         Context context = null;
+        RelativeLayout contact_row_layout;
         public RecyclerViewHolder(View itemView, Context context, ArrayList<Contact> contactList) {
             super(itemView);
             this.context =context;
@@ -77,8 +79,11 @@ public class ContactRecyclerAdaptor extends RecyclerView.Adapter<ContactRecycler
             accountImageView = (CircularImageView) itemView.findViewById(R.id.contact_icon);
             contactNameTxt = (TextView) itemView.findViewById(R.id.contact_name);
             phone_number_txt = (TextView) itemView.findViewById(R.id.mobile);
+            contact_row_layout = itemView.findViewById(R.id.contact_row_layout);
             checkBox =  itemView.findViewById(R.id.checkbox);
             checkBox.setOnCheckedChangeListener(this);
+            contact_row_layout.setOnClickListener(this);
+
         }
 
         @Override
@@ -92,10 +97,19 @@ public class ContactRecyclerAdaptor extends RecyclerView.Adapter<ContactRecycler
             }
             invitingActivity.updateSelectedNumber(selectedContactList.size());
         }
+
+        @Override
+        public void onClick(View view) {
+            this.checkBox.toggle();
+        }
     }
 
     public ArrayList<Contact> getSelectedContactList() {
         return selectedContactList;
+    }
+
+    public void notifySelectedChanged(){
+
     }
 
     private Contact isInList(Contact contact){

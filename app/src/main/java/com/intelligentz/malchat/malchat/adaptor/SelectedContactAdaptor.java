@@ -18,11 +18,16 @@ import java.util.ArrayList;
  */
 
 public class SelectedContactAdaptor extends RecyclerView.Adapter<SelectedContactAdaptor.RecyclerViewHolder> {
+    private ContactRecyclerAdaptor contactRecyclerAdaptor;
     private Context context;
     private ArrayList<Contact> selectedContactList;
     public SelectedContactAdaptor(Context context) {
         this.context = context;
         selectedContactList = ContactRecyclerAdaptor.selectedContactList;
+    }
+
+    public void setContactRecyclerAdaptor(ContactRecyclerAdaptor contactRecyclerAdaptor) {
+        this.contactRecyclerAdaptor = contactRecyclerAdaptor;
     }
 
     @Override
@@ -45,12 +50,10 @@ public class SelectedContactAdaptor extends RecyclerView.Adapter<SelectedContact
     public class RecyclerViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
         TextView contactNameTxt;
         ImageView cancelButtton;
-        ArrayList<Contact> contactList = null;
         Context context = null;
         public RecyclerViewHolder(View itemView, Context context) {
             super(itemView);
             this.context =context;
-            this.contactList = contactList;
             contactNameTxt = (TextView) itemView.findViewById(R.id.name_txt);
             cancelButtton =  itemView.findViewById(R.id.cancel_icon);
             cancelButtton.setOnClickListener(this);
@@ -61,6 +64,8 @@ public class SelectedContactAdaptor extends RecyclerView.Adapter<SelectedContact
             int pos = getAdapterPosition();
             selectedContactList.remove(pos);
             notifyItemRemoved(pos);
+            contactRecyclerAdaptor.notifyDataSetChanged();
         }
     }
+
 }

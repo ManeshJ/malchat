@@ -21,11 +21,15 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.intelligentz.malchat.malchat.R;
 import com.intelligentz.malchat.malchat.adaptor.ContactRecyclerAdaptor;
+import com.intelligentz.malchat.malchat.adaptor.SelectedContactAdaptor;
 import com.intelligentz.malchat.malchat.model.Contact;
 import com.rilixtech.materialfancybutton.MaterialFancyButton;
 
@@ -46,6 +50,7 @@ public class InvitingActivity extends AppCompatActivity {
     private String username;
     private int sentCount = 0;
     private ArrayList<Contact> contactList;
+    private ArrayList<String> contactNumberList;
     private ArrayList<Contact> searchcontactList;
     private ArrayList<Contact> selectedContactList;
     private RecyclerView recyclerView;
@@ -56,6 +61,11 @@ public class InvitingActivity extends AppCompatActivity {
     private SweetAlertDialog progressDialog;
     private BroadcastReceiver broadcastReceiver;
     private EditText txt_search;
+    public RecyclerView selectedTecyclerView;
+    private SelectedContactAdaptor selectedContactAdaptor;
+    private RecyclerView.LayoutManager selectedContactLayoutManager;
+    private CheckBox select_all_check;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,9 +73,32 @@ public class InvitingActivity extends AppCompatActivity {
         this.context = this;
         this.username = getIntent().getStringExtra("username");
         recyclerView = (RecyclerView) findViewById(R.id.recyclerview);
+        selectedTecyclerView = (RecyclerView) findViewById(R.id.selected_recycler_view);
         invite_btn = (MaterialFancyButton) findViewById(R.id.send_btn);
         txt_search = (EditText) findViewById(R.id.txt_search);
         selected_number_lbl = (TextView) findViewById(R.id.selectednumber_lbl);
+        select_all_check = (CheckBox) findViewById(R.id.select_all_check);
+        select_all_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if (b) {
+                    ContactRecyclerAdaptor.selectedContactList.clear();
+                    ContactRecyclerAdaptor.selectedContactList.addAll(contactList);
+                } else {
+                    ContactRecyclerAdaptor.selectedContactList.clear();
+                }
+                selectedContactAdaptor = new SelectedContactAdaptor(context);
+                loadRecyclerView();
+                selectedTecyclerView.setAdapter(selectedContactAdaptor);
+                selectedTecyclerView.scrollToPosition(ContactRecyclerAdaptor.selectedContactList.size() - 1);
+            }
+        });
+        contactlayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        selectedContactLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(contactlayoutManager);
+        selectedTecyclerView.setLayoutManager(selectedContactLayoutManager);
+        recyclerView.setNestedScrollingEnabled(false);
+        selectedTecyclerView.setNestedScrollingEnabled(false);
         new RetrieveContacts().execute();
         invite_btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,38 +124,42 @@ public class InvitingActivity extends AppCompatActivity {
 
     }
 
-    private void getContactList(){
-        Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,null, null, null, ContactsContract.Contacts.DISPLAY_NAME+" ASC");
+    private void getContactList() {
+        Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, null, null, ContactsContract.Contacts.DISPLAY_NAME + " ASC");
         contactList = new ArrayList<>();
+        contactNumberList = new ArrayList<>();
         searchcontactList = new ArrayList<>();
         while (cursor.moveToNext()) {
             String contactId = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts._ID));
             String hasPhone = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
             String name = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-            if("1".equals(hasPhone) || Boolean.parseBoolean(hasPhone)) {
-                Cursor phones = this.getContentResolver().query( ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ contactId, null, null);
+            if ("1".equals(hasPhone) || Boolean.parseBoolean(hasPhone)) {
+                String[] selection = new String[]{"DISTINCT " + ContactsContract.CommonDataKinds.Phone.NUMBER, ContactsContract.CommonDataKinds.Phone.TYPE};
+                Cursor phones = this.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
                 while (phones.moveToNext()) {
                     String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                     int itype = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
-
                     final boolean isMobile =
                             itype == ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE ||
-                                    itype == ContactsContract.CommonDataKinds.Phone.TYPE_WORK_MOBILE||
-                                        itype == ContactsContract.CommonDataKinds.Phone.TYPE_HOME;
-                    if (isMobile) this.contactList.add(new Contact(name,phoneNumber));
+                                    itype == ContactsContract.CommonDataKinds.Phone.TYPE_WORK_MOBILE ||
+                                    itype == ContactsContract.CommonDataKinds.Phone.TYPE_HOME;
+                    if (!contactNumberList.contains(phoneNumber)) {
+                        if (isMobile && !contactNumberList.contains(phoneNumber)) {
+                            this.contactList.add(new Contact(name, phoneNumber));
+                            contactNumberList.add(phoneNumber);
+                        }
+                    }
                 }
                 phones.close();
             }
         }
         searchcontactList.addAll(contactList);
     }
-    private void loadRecyclerView(){
-        contactlayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(contactlayoutManager);
-        recyclerAdaptor = new ContactRecyclerAdaptor(this, contactList);
-        recyclerView.setAdapter(recyclerAdaptor);
-        recyclerView.setNestedScrollingEnabled(false);
 
+    private void loadRecyclerView() {
+        recyclerAdaptor = new ContactRecyclerAdaptor(this, searchcontactList, selectedContactAdaptor);
+        recyclerView.setAdapter(recyclerAdaptor);
+        selectedContactAdaptor.setContactRecyclerAdaptor(recyclerAdaptor);
     }
 
 //    private void openContactList(){
@@ -207,9 +244,9 @@ public class InvitingActivity extends AppCompatActivity {
 //        }
 //    }
 
-    public void updateSelectedNumber(int number){
+    public void updateSelectedNumber(int number) {
         if (number > 0) {
-            this.selected_number_lbl.setText(String.valueOf(number)+ " Selected");
+            this.selected_number_lbl.setText(String.valueOf(number) + " Selected");
         } else {
             this.selected_number_lbl.setText("None Selected");
         }
@@ -222,9 +259,9 @@ public class InvitingActivity extends AppCompatActivity {
             public void onClick(SweetAlertDialog sweetAlertDialog) {
                 sweetAlertDialog.dismissWithAnimation();
                 Intent intent = new Intent(context, MainActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("username",username);
-                intent.putExtra("newuser",true);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("username", username);
+                intent.putExtra("newuser", true);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -235,18 +272,15 @@ public class InvitingActivity extends AppCompatActivity {
         progressDialog.setContentText("Sent " + String.valueOf(sentCount) + "/" + String.valueOf(totalinvites));
         progressDialog.getProgressHelper().setRimColor(R.color.colorPrimary);
         progressDialog.show();
-        final String SENT_ACTION = "com.intelligentz.malchat.invsent"+String.valueOf(sentCount);
+        final String SENT_ACTION = "com.intelligentz.malchat.invsent" + String.valueOf(sentCount);
         final PendingIntent sentPI = PendingIntent.getBroadcast(this, 0, new Intent(SENT_ACTION), 0);
-        broadcastReceiver  = new BroadcastReceiver()
-        {
+        broadcastReceiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context arg0, Intent arg1)
-            {
-                switch(getResultCode())
-                {
+            public void onReceive(Context arg0, Intent arg1) {
+                switch (getResultCode()) {
                     case Activity.RESULT_OK:
                         sentCount += 1;
-                        if (sentCount >= totalinvites){
+                        if (sentCount >= totalinvites) {
                             progressDialog.setTitleText("Success!")
                                     .setContentText("All the messages were sent")
                                     .setConfirmText("OK")
@@ -261,28 +295,28 @@ public class InvitingActivity extends AppCompatActivity {
                         break;
                     case SmsManager.RESULT_ERROR_GENERIC_FAILURE:
                         progressDialog.setTitleText("Failed!")
-                                .setContentText("There was an error sending. Sent "+String.valueOf(sentCount)+"/"+String.valueOf(totalinvites))
+                                .setContentText("There was an error sending. Sent " + String.valueOf(sentCount) + "/" + String.valueOf(totalinvites))
                                 .setConfirmText("OK")
                                 .setConfirmClickListener(successListener)
                                 .changeAlertType(SweetAlertDialog.ERROR_TYPE);
                         break;
                     case SmsManager.RESULT_ERROR_NO_SERVICE:
                         progressDialog.setTitleText("Failed!")
-                                .setContentText("There was an error sending. Sent "+String.valueOf(sentCount)+"/"+String.valueOf(totalinvites))
+                                .setContentText("There was an error sending. Sent " + String.valueOf(sentCount) + "/" + String.valueOf(totalinvites))
                                 .setConfirmText("OK")
                                 .setConfirmClickListener(successListener)
                                 .changeAlertType(SweetAlertDialog.ERROR_TYPE);
                         break;
                     case SmsManager.RESULT_ERROR_NULL_PDU:
                         progressDialog.setTitleText("Failed!")
-                                .setContentText("There was an error sending. Sent "+String.valueOf(sentCount)+"/"+String.valueOf(totalinvites))
+                                .setContentText("There was an error sending. Sent " + String.valueOf(sentCount) + "/" + String.valueOf(totalinvites))
                                 .setConfirmText("OK")
                                 .setConfirmClickListener(successListener)
                                 .changeAlertType(SweetAlertDialog.ERROR_TYPE);
                         break;
                     case SmsManager.RESULT_ERROR_RADIO_OFF:
                         progressDialog.setTitleText("Failed!")
-                                .setContentText("There was an error sending. Sent "+String.valueOf(sentCount)+"/"+String.valueOf(totalinvites))
+                                .setContentText("There was an error sending. Sent " + String.valueOf(sentCount) + "/" + String.valueOf(totalinvites))
                                 .setConfirmText("OK")
                                 .setConfirmClickListener(successListener)
                                 .changeAlertType(SweetAlertDialog.ERROR_TYPE);
@@ -308,7 +342,7 @@ public class InvitingActivity extends AppCompatActivity {
                         .setConfirmClickListener(successListener)
                         .changeAlertType(SweetAlertDialog.ERROR_TYPE);
             }
-            Toast.makeText(getApplicationContext(),ex.getMessage().toString(),
+            Toast.makeText(getApplicationContext(), ex.getMessage().toString(),
                     Toast.LENGTH_LONG).show();
             ex.printStackTrace();
         }
@@ -336,12 +370,13 @@ public class InvitingActivity extends AppCompatActivity {
         }
 
 
-
         protected void onPostExecute(String file_url) {
             if (progressDialog.isShowing()) {
                 progressDialog.dismissWithAnimation();
             }
+            selectedContactAdaptor = new SelectedContactAdaptor(context);
             loadRecyclerView();
+            selectedTecyclerView.setAdapter(selectedContactAdaptor);
             configureSearchText();
         }
     }
@@ -379,8 +414,7 @@ public class InvitingActivity extends AppCompatActivity {
                     searchcontactList = new ArrayList<Contact>();
                     searchcontactList.addAll(contactList);
                 }
-                recyclerAdaptor = new ContactRecyclerAdaptor(context,searchcontactList);
-                recyclerView.setAdapter(recyclerAdaptor);
+                loadRecyclerView();
             }
 
             @Override
@@ -388,5 +422,13 @@ public class InvitingActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
     }
 }

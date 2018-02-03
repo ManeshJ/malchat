@@ -30,15 +30,17 @@ public class ContactRecyclerAdaptor extends RecyclerView.Adapter<ContactRecycler
     private Context context;
     private InvitingActivity invitingActivity;
     private ArrayList<Contact> contactList;
-    public static ArrayList<Contact> selectedContactList;
+    public static ArrayList<Contact> selectedContactList = new ArrayList<>();
+    private SelectedContactAdaptor selectedContactAdaptor;
 
-    public ContactRecyclerAdaptor(Context context, ArrayList<Contact> contactList){
+    public ContactRecyclerAdaptor(Context context, ArrayList<Contact> contactList, SelectedContactAdaptor selectedContactAdaptor){
         this.context = context;
         this.invitingActivity = (InvitingActivity) context;
         this.contactList = contactList;
-        if (this.selectedContactList == null) {
-            this.selectedContactList = new ArrayList<Contact>();
-        }
+        this.selectedContactAdaptor = selectedContactAdaptor;
+//        if (this.selectedContactList == null) {
+//            this.selectedContactList = new ArrayList<Contact>();
+//        }
     }
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -92,10 +94,14 @@ public class ContactRecyclerAdaptor extends RecyclerView.Adapter<ContactRecycler
             if (b) {
                 if (isInList(contactList.get(pos)) == null)
                 selectedContactList.add(contactList.get(pos));
+                selectedContactAdaptor.notifyDataSetChanged();
+                invitingActivity.selectedTecyclerView.scrollToPosition(ContactRecyclerAdaptor.selectedContactList.size() - 1);
             } else {
                 selectedContactList.remove(isInList(contactList.get(pos)));
+                selectedContactAdaptor.notifyDataSetChanged();
             }
             invitingActivity.updateSelectedNumber(selectedContactList.size());
+
         }
 
         @Override
@@ -108,9 +114,6 @@ public class ContactRecyclerAdaptor extends RecyclerView.Adapter<ContactRecycler
         return selectedContactList;
     }
 
-    public void notifySelectedChanged(){
-
-    }
 
     private Contact isInList(Contact contact){
         Contact ith;
@@ -122,4 +125,5 @@ public class ContactRecyclerAdaptor extends RecyclerView.Adapter<ContactRecycler
         }
         return null;
     }
+
 }

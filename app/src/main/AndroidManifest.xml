@@ -72,7 +72,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".view.InvitingActivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
         <activity
             android:name=".view.InviteSelectionActivity"
             android:theme="@style/AppTheme.NoActionBar" />
